@@ -5,6 +5,8 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
 import { NgForm } from '../../../node_modules/@angular/forms';
 import { Users } from '../model/users';
 import { Router } from '../../../node_modules/@angular/router';
+
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -38,9 +40,11 @@ export class UserComponent implements OnInit {
   constructor(private data: DataService,private router: Router) { }
   
   ngOnInit() {
+
     this.data.getUsers().subscribe(
       data=> this.users$= data
     );
+
   }
   resentForm(form? : NgForm){
     if(form){
@@ -56,7 +60,6 @@ export class UserComponent implements OnInit {
       alert("User created successfully.");
       console.log(form.value);
       this.resentForm(form);
-      this.comeBack();
     })
   
   }

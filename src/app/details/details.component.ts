@@ -11,8 +11,6 @@ import { Users } from '../model/users';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  username : string;
-  password: string;
   user$: Object;
   constructor(private route: ActivatedRoute, private data: DataService,private router: Router) { 
       this.route.params.subscribe( params=> this.user$ = params.id);
@@ -23,7 +21,7 @@ export class DetailsComponent implements OnInit {
     );
   }
   comebackDelete(): void{
-    this.router.navigate(['']);
+    this.router.navigate(['/user']);
   }
   deleteUser(id:string){
     if(confirm('are you sure you want to delete it')){
