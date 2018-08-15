@@ -13,43 +13,43 @@ import javax.validation.constraints.NotBlank;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long ID;
+    private long id;
     @NotBlank
-    private String USERNAME;
+    private String username;
     @NotBlank
-    private String PASSWORD;
+    private String password;
 
     public User(){}
 
-    public User(long ID){
-        this.ID=ID;
+    public User(long id){
+        this.id=id;
     }
-    public User(String USERNAME, String PASSWORD){
-        this.USERNAME=USERNAME;
-        this.PASSWORD=PASSWORD;
-    }
-
-    public long getID() {
-        return ID;
+    public User(String username, String password){
+        this.username=username;
+        this.password=password;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public long getId() {
+        return id;
     }
 
-    public String getUSERNAME() {
-        return USERNAME;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUSERNAME(String USERNAME) {
-        this.USERNAME = USERNAME;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPASSWORD() {
-        return PASSWORD;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setPASSWORD(String PASSWORD) {
-        this.PASSWORD = PASSWORD;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

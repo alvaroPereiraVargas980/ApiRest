@@ -12,12 +12,15 @@ import { Users } from '../model/users';
 })
 export class DetailsComponent implements OnInit {
   user$: Object;
+  idUpdate: string;
   constructor(private route: ActivatedRoute, private data: DataService,private router: Router) { 
       this.route.params.subscribe( params=> this.user$ = params.id);
   }
   ngOnInit() {
+    this.idUpdate=JSON.parse(JSON.stringify((this.user$)));
     this.data.getUser(this.user$).subscribe(
       data=>this.user$=data
+      
     );
   }
   comebackDelete(): void{
@@ -31,11 +34,13 @@ export class DetailsComponent implements OnInit {
     }
   }
   updateData(form : NgForm){
-   this.data.putUser(form.value).subscribe(res=>{
+    if(confirm('are you sure to update data')){
+   this.data.putUser(this.idUpdate,form.value).subscribe(res=>{
+    this.resentForm(form);
       console.log("update successfully")
     })
-   console.log(form.value);
   }
+}
   resentForm(form? : NgForm){
     if(form){
         form.reset();
@@ -43,7 +48,9 @@ export class DetailsComponent implements OnInit {
     }
   }
   chargeData(id: string){
-    console.log(id);
+    return id;
   }
-
+  closeModal(){
+    this.router.navigate(['/user']);
+  }
 }

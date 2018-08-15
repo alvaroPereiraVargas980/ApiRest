@@ -63,4 +63,7 @@ export class UserComponent implements OnInit {
     })
   
   }
+  closeModal(){
+    this.router.navigate(['/user']);
+  }
 }

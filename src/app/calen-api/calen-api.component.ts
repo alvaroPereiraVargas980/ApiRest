@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
- 
+
 
 
 @Component({
@@ -16,14 +16,30 @@ export class CalenApiComponent implements OnInit {
   ngOnInit() {
      this.calendarOptions = {
         editable: true,
+        defaultDate: Date(),
         eventLimit: false,
         header: {
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay,listMonth'
         },
-        //events: data
+        selectable: true,
+        events: [
+        {
+          title: 'All Day Event',
+          start: '2018-08-25'
+        },
+        {
+          title: 'Repeating Event',
+          start: '2018-08-09T16:00:00'
+        }
+      ],
+      dayClick: function(date, JavaScriptEvent, view){
+        alert(date);
+        //$("#exampleModal").modal('show');
+        //$('#fechaInicio').val(date.format());
+        //alert('Click in day click' + '' + 'date.format()');
+      }
       };
-  }
- 
+    }
 }

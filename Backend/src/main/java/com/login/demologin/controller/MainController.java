@@ -39,8 +39,8 @@ public class MainController {
         User user = userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
 
-        user.setUSERNAME(userDetails.getUSERNAME());
-        user.setPASSWORD(userDetails.getPASSWORD());
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(userDetails.getPassword());
 
         User updateUser = userRespository.save(user);
         return updateUser;
