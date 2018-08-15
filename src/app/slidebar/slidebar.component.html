@@ -5,10 +5,15 @@
           <i class="material-icons">supervised_user_circle</i>
         </a>
       </li>
-      <li>
-          <a routerLink="post" [class.activated]="currentUrl == '/posts'">
-            <i class="material-icons">message</i>
+        <li>
+          <a routerLink="user" [class.activated]="currentUrl == '/user'">
+            <i class="material-icons">face</i>
           </a>
         </li>
+        <li>
+          <a routerLink="calendar" [class.activated]="currentUrl == '/calendar'">
+            <i class="material-icons">event</i>
+          </a>
+        </li>  
     </ul>
   </nav>
