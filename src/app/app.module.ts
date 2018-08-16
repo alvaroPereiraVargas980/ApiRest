@@ -14,8 +14,10 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { CalenApiComponent } from './calen-api/calen-api.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
-
-
+import * as $AB from 'jquery';
+import * as bootstrap from "bootstrap";
+import { EventSesrvice } from '../app/calen-api/event.service';
+import * as moment from 'moment';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,7 @@ import { AuthService } from './auth/auth.service';
     FullCalendarModule
    
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard,EventSesrvice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

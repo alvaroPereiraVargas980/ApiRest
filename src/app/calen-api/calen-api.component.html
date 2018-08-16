@@ -1,22 +1,20 @@
 <div class="row">
   <div class="col-md-3">
+        <p>Display event : {{displayEvent | json}}</p>
   </div>
   <div class="col-md-9">
-      <div *ngIf="calendarOptions">
-          <ng-fullcalendar #ucCalendar [options]="calendarOptions" [(eventsModel)]="events"></ng-fullcalendar>
-      </div>
+        <div *ngIf="calendarOptions">
+                <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (dayClick)="dayClick($event.detail)"(eventDrop)="updateEvent($event.detail)"
+        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
+</div>
   </div>
 </div>
-
-
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
   
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -28,17 +26,23 @@
                         <div class="col-lg-12">
                             <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Make an appoinment</h1></div>
                             <div class="form-group">
-                                <label for="InputName"> start date</label>
+                                <label for="InputName"> started date</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fechaInicio" id="fechaInicio" placeholder="username" >              
+                                    <input type="text" class="form-control" name="fechaInicio" id="fechaInicio" placeholder="start date" >              
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="InputEmail">finish date</label>
+                                <label for="InputEmail">finished date</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control"  name="fechaFin" id="fechaFin" placeholder="Password" >          
+                                    <input type="password" class="form-control"  name="fechaFin" id="fechaFin" placeholder="finish date" >          
                                 </div>
                             </div>
+                            <div class="form-group">
+                                    <label for="InputName"> Desciption</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="descipcion" id="descipcion" placeholder="Desciption" >              
+                                    </div>
+                                </div>
                             <input type="submit"  value="Update" class="btn btn-info float-xs-right" >
                         </div>
                     </form>
@@ -52,3 +56,4 @@
       </div>
     </div>
   </div>
+
