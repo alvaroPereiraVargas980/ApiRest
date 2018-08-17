@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-3">
-        <p>Display event : {{displayEvent | json}}</p>
+         <!--<p>Display event : {{displayEvent | json}}</p>-->
+         <app-calen-aux></app-calen-aux>
   </div>
   <div class="col-md-9">
         <div *ngIf="calendarOptions">
@@ -26,24 +27,27 @@
                         <div class="col-lg-12">
                             <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Make an appoinment</h1></div>
                             <div class="form-group">
-                                <label for="InputName"> started date</label>
+                                <label for="InputName"> Description</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fechaInicio" id="fechaInicio" placeholder="start date" >              
+                                    <input type="text" class="form-control" name="description" #name="ngModel" id="description" [(ngModel)]="description" placeholder="description" >              
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="InputEmail">finished date</label>
+                                <label for="InputEmail">start date</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control"  name="fechaFin" id="fechaFin" placeholder="finish date" >          
+                                    <input type="text" class="form-control" name="startDate" #name="ngModel" id="startDate" [(ngModel)]="startDate" placeholder="startDate" >              
                                 </div>
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control"  name="fechaFin" #name="ngModel" id="fechaFin" [(ngModel)]="fechaFin" onclick='calendar()'placeholder="finish date" >          
+                                </div>-->
                             </div>
                             <div class="form-group">
-                                    <label for="InputName"> Desciption</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="descipcion" id="descipcion" placeholder="Desciption" >              
-                                    </div>
+                                    <label for="InputName">finish date </label>
+                                    <div class="datepicker-container">
+                                        <ng-datepicker [(ngModel)]="date" [options]="options"></ng-datepicker>
+                                      </div>
                                 </div>
-                            <input type="submit"  value="Update" class="btn btn-info float-xs-right" >
+                            <input type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(userForm)" >
                         </div>
                     </form>
                 </div>

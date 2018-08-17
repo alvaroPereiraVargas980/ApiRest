@@ -18,6 +18,10 @@ import * as $AB from 'jquery';
 import * as bootstrap from "bootstrap";
 import { EventSesrvice } from '../app/calen-api/event.service';
 import * as moment from 'moment';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { CalenAuxComponent } from './calen-aux/calen-aux.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import * as moment from 'moment';
     DetailsComponent,
     LoginComponent,
     CalenApiComponent,
+    CalenAuxComponent,
  
     
   ],
@@ -36,7 +41,9 @@ import * as moment from 'moment';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    FullCalendarModule
+    FullCalendarModule,
+    NgDatepickerModule,
+    NgbModule
    
   ],
   providers: [AuthService, AuthGuard,EventSesrvice],

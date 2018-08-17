@@ -3,6 +3,10 @@ import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { EventSesrvice } from './event.service';
 import * as moment from 'moment';
+import { NgModel } from '../../../node_modules/@angular/forms';
+import { DatepickerOptions } from 'ng2-datepicker';
+import * as enLocale from 'date-fns/locale/en';
+import * as frLocale from 'date-fns/locale/fr';
 
 @Component({
   selector: 'app-calen-api',
@@ -10,10 +14,23 @@ import * as moment from 'moment';
   styleUrls: ['./calen-api.component.scss']
 })
 export class CalenApiComponent implements OnInit {
+  date: Date;
+  
+  options: DatepickerOptions = {
+    locale: enLocale,
+    barTitleIfEmpty: 'Click to select a date',
+    placeholder: 'Click to select a date',
+    useEmptyBarTitle: false,
+    fieldId: 'datapicker',
+  };
+
   calendarOptions: Options;
   displayEvent: any;
+  description:string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  constructor(protected eventService: EventSesrvice) {}
+  constructor(protected eventService: EventSesrvice) {
+    this.date = new Date();
+  }
   ngOnInit() {
     this.eventService.getEvents().subscribe(data => {
      this.calendarOptions = {
@@ -32,9 +49,11 @@ export class CalenApiComponent implements OnInit {
     });
     
     }
+    
       dayClick(mode : any) {
         $('#exampleModal').modal('show');
-        $('#fechaInicio').val(mode.date.format());
+        $('#startDate').val(mode.date.format());
+       
       }  
       clickButton(model: any) {
         this.displayEvent = model;
@@ -53,8 +72,6 @@ export class CalenApiComponent implements OnInit {
         duration: {}
       }
       $('#fechaInicio').val(model.event.start);
-      //$('#descripcion').val(model.event.allDay);
-      this.displayEvent = model;
     }
     updateEvent(model: any) {
     model = {
@@ -68,7 +85,12 @@ export class CalenApiComponent implements OnInit {
         _data: model.duration._data
       }
     }
-    this.displayEvent = model;
+    //this.displayEvent = model;
+  }
+  saveData(form: NgModel){
+    var test=$('#startDate').val();
+    console.log(test, this.date, this.description);
+  
   }
     
   }
