@@ -3,25 +3,28 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { DetailsComponent } from './details/details.component';
 import { LoginComponent } from './login/login.component';
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalenApiComponent } from './calen-api/calen-api.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
  {
-    path: '',
+    path: 'login',
     component: LoginComponent
  },
  {
   path: 'details/:id',
-  component: DetailsComponent
+  component: DetailsComponent,canActivate: [AuthGuard]
 },
 {
   path: 'user',
-  component: UserComponent
+  component: UserComponent,canActivate: [AuthGuard]
 },
-{
-  path:'calendar',
-  component: CalendarComponent
-}
+{ 
+  path: 'calen-api',
+  component: CalenApiComponent,canActivate: [AuthGuard]
+},
+{ path: '**', redirectTo: ''},
+
 ];
 
 @NgModule({
