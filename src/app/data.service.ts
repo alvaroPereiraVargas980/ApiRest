@@ -24,8 +24,8 @@ export class DataService {
   postUser(User : Users){
     return this.http.post('http://localhost:8080/demo/create',User);
   }
-  putUser(User : Users){
-      return this.http.put('http://localhost:8080/demo/notes'+ `/${User._id}`, User);
+  putUser(id: string,User : Users){
+      return this.http.put('http://localhost:8080/demo/notes/'+ id, User);
   }
   deleteUser(_id : string){
       return this.http.delete('http://localhost:8080/demo/notes'+ `/${_id}`);

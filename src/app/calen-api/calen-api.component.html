@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-3">
+         <!--<p>Display event : {{displayEvent | json}}</p>-->
+         <app-calen-aux></app-calen-aux>
+  </div>
+  <div class="col-md-9">
+        <div *ngIf="calendarOptions">
+                <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (dayClick)="dayClick($event.detail)"(eventDrop)="updateEvent($event.detail)"
+        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
+</div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+  
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  <!-- addUserTemplate -->
+            <div class="container">
+                <div class="row">
+                    <form #userForm="ngForm">
+                        <div class="col-lg-12">
+                            <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Make an appoinment</h1></div>
+                            <div class="form-group">
+                                <label for="InputName"> Description</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="description" #name="ngModel" id="description" [(ngModel)]="description" placeholder="description" >              
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="InputEmail">start date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="startDate" #name="ngModel" id="startDate" [(ngModel)]="startDate" placeholder="startDate" >              
+                                </div>
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control"  name="fechaFin" #name="ngModel" id="fechaFin" [(ngModel)]="fechaFin" onclick='calendar()'placeholder="finish date" >          
+                                </div>-->
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">finish date </label>
+                                    <div class="datepicker-container">
+                                        <ng-datepicker [(ngModel)]="date" [options]="options"></ng-datepicker>
+                                      </div>
+                                </div>
+                            <input type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(userForm)" >
+                        </div>
+                    </form>
+                </div>
+              </div>
+  <!-- adduserTemplate -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
