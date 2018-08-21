@@ -7,15 +7,44 @@ import { NgModel } from '../../../node_modules/@angular/forms';
 import { DatepickerOptions } from 'ng2-datepicker';
 import * as enLocale from 'date-fns/locale/en';
 import * as frLocale from 'date-fns/locale/fr';
+import { NgForm } from '../../../node_modules/@angular/forms';
+import { Calendar } from '../model/calendar';
+import { DataService } from '../data.service';
+import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-calen-api',
   templateUrl: './calen-api.component.html',
-  styleUrls: ['./calen-api.component.scss']
+  styleUrls: ['./calen-api.component.scss'],
+  animations:[
+    trigger('listStagger', [
+      transition('* <=> *', [
+        query(
+          ':enter',
+          [
+            style({ opacity: 0, transform: 'translateY(-15px)' }),
+            stagger(
+              '50ms',
+              animate(
+                '550ms ease-out',
+                style({ opacity: 1, transform: 'translateY(0px)' })
+              )
+            )
+          ],
+          { optional: true }
+        ),
+        query(':leave', animate('50ms', style({ opacity: 0 })), {
+          optional: true
+        })
+      ])
+    ])
+  ]
 })
+
 export class CalenApiComponent implements OnInit {
+  calendars$: Object;
   date: Date;
-  
+  heroes= [];
   options: DatepickerOptions = {
     locale: enLocale,
     barTitleIfEmpty: 'Click to select a date',
@@ -28,10 +57,14 @@ export class CalenApiComponent implements OnInit {
   displayEvent: any;
   description:string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  constructor(protected eventService: EventSesrvice) {
+  constructor(protected eventService: EventSesrvice,private data: DataService) {
     this.date = new Date();
   }
   ngOnInit() {
+    this.data.getCalendars().subscribe(
+      data=> this.calendars$= data
+    );
+    this.heroes.push(this.calendars$);
     this.eventService.getEvents().subscribe(data => {
      this.calendarOptions = {
         editable: true,
@@ -43,18 +76,24 @@ export class CalenApiComponent implements OnInit {
           right: 'month,agendaWeek,agendaDay,listMonth'
         },
         selectable: true,
-        events:  data,
+        events:data,
        
       };
     });
     
     }
+       eventDrop(mode: any){
+       alert(mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
+       console.log(mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
+       
+      
+    }
     
       dayClick(mode : any) {
         $('#exampleModal').modal('show');
-        $('#startDate').val(mode.date.format());
+        $('#start').val(mode.date.format());
        
-      }  
+      } 
       clickButton(model: any) {
         this.displayEvent = model;
       }
@@ -71,7 +110,8 @@ export class CalenApiComponent implements OnInit {
         },
         duration: {}
       }
-      $('#fechaInicio').val(model.event.start);
+      $('#title').val(model.event.title);
+      $('#start').val(model.event.start);
     }
     updateEvent(model: any) {
     model = {
@@ -87,10 +127,20 @@ export class CalenApiComponent implements OnInit {
     }
     //this.displayEvent = model;
   }
-  saveData(form: NgModel){
-    var test=$('#startDate').val();
-    console.log(test, this.date, this.description);
-  
+
+  resentForm(form? : NgForm){
+    if(form){
+        form.reset();
+        this.data.selectedCalendar= new Calendar;
+    }
+  }
+  saveData(form : NgForm){
+    console.log(form.value);
+    this.data.postCalendar(form.value).subscribe(res=>{
+      alert("Calendar created successfully.");
+      console.log(form.value);
+      this.resentForm(form);
+    });
   }
     
   }

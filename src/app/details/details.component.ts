@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from "@angular/router"
 import { NgForm } from '../../../node_modules/@angular/forms';
 import { Users } from '../model/users';
@@ -47,10 +46,5 @@ export class DetailsComponent implements OnInit {
         this.data.selectedUser= new Users;
     }
   }
-  chargeData(id: string){
-    return id;
-  }
-  closeModal(){
-    this.router.navigate(['/user']);
-  }
+
 }

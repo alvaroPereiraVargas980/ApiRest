@@ -1,12 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs'
+import { DataService } from '../data.service';
+import { Calendar } from '../model/calendar';
 @Injectable()
 export class EventSesrvice {
     public getEvents(): Observable<any> {
         const dateObj = new Date();
         const yearMonth = dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1);
-        let data: any = [{
+        let data:any = [/*this.calendars$*/
+            { 
             title: 'All Day Event',
             start: yearMonth + '-01'
         },
@@ -58,9 +61,9 @@ export class EventSesrvice {
         },
         {
             title: 'Click for Google',
-            url: 'http://google.com/',
             start: yearMonth + '-28'
-        }];
+        }
+    ];
         return of(data);
     }
 };

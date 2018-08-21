@@ -1,8 +1,10 @@
 package com.login.demologin.controller;
 
+import com.login.demologin.Calrepository.CaleRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.login.demologin.User.User;
+import com.login.demologin.calendar.Calendar;
 import com.login.demologin.Repository.UserRespository;
 import javax.validation.Valid;
 import java.util.List;
@@ -12,27 +14,28 @@ import org.springframework.http.ResponseEntity;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/demo")
-public class MainController {
+@RequestMapping("/User")
+public class UserController {
     @Autowired
     private UserRespository userRespository;
-    @PostMapping("/create")
+
+    @PostMapping("/CreateUser")
     public User createNote(@Valid @RequestBody User user) {
 
         return userRespository.save(user);
     }
-    @GetMapping("/notes")
+    @GetMapping("/GetUser")
     public List<User> getAllNotes(){
 
         return (List<User>) userRespository.findAll();
     }
 
-    @GetMapping("/notes/{id}")
+    @GetMapping("/GetUser/{id}")
     public User getNoteById(@PathVariable(value = "id") Long noteId) {
         return userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
     }
-    @PutMapping("/notes/{id}")
+    @PutMapping("/PutUser/{id}")
     public User updateUser(@PathVariable(value = "id") Long noteId,
                            @Valid @RequestBody User userDetails) {
 
@@ -46,7 +49,7 @@ public class MainController {
         return updateUser;
     }
 
-    @DeleteMapping("/notes/{id}")
+    @DeleteMapping("/DeleteUser/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         User user = userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
