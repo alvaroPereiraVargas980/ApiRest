@@ -5,7 +5,7 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
 import { NgForm } from '../../../node_modules/@angular/forms';
 import { Users } from '../model/users';
 import { Router } from '../../../node_modules/@angular/router';
-
+import { AuthServices } from '../oauth2/oauth2.service';
 
 @Component({
   selector: 'app-user',
@@ -37,7 +37,7 @@ import { Router } from '../../../node_modules/@angular/router';
 })
 export class UserComponent implements OnInit {
   users$: Object;
-  constructor(private data: DataService,private router: Router) { }
+  constructor(private data: DataService,private router: Router,private auth: AuthServices) { }
   
   ngOnInit() {
 

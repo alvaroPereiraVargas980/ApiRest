@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-
+import { AuthServices } from '../app/oauth2/oauth2.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +8,7 @@ import { Component,OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'practice';
+  constructor(private auth: AuthServices){  
+    auth.handleAuthentication();
+  }
 }

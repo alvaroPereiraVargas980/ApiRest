@@ -11,6 +11,8 @@ import { NgForm } from '../../../node_modules/@angular/forms';
 import { Calendar } from '../model/calendar';
 import { DataService } from '../data.service';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
+import { AuthServices } from '../oauth2/oauth2.service';
+
 
 @Component({
   selector: 'app-calen-api',
@@ -57,8 +59,9 @@ export class CalenApiComponent implements OnInit {
   displayEvent: any;
   description:string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  constructor(protected eventService: EventSesrvice,private data: DataService) {
+  constructor(protected eventService: EventSesrvice,private data: DataService,private auth: AuthServices) {
     this.date = new Date();
+    auth.handleAuthentication();
   }
   ngOnInit() {
     this.data.getCalendars().subscribe(

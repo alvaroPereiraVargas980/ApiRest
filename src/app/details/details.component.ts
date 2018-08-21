@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { ActivatedRoute, Router } from "@angular/router"
 import { NgForm } from '../../../node_modules/@angular/forms';
 import { Users } from '../model/users';
+import { AuthServices } from '../oauth2/oauth2.service';
 
 @Component({
   selector: 'app-details',
@@ -12,8 +13,9 @@ import { Users } from '../model/users';
 export class DetailsComponent implements OnInit {
   user$: Object;
   idUpdate: string;
-  constructor(private route: ActivatedRoute, private data: DataService,private router: Router) { 
+  constructor(private route: ActivatedRoute, private data: DataService,private router: Router,  private auth: AuthServices) { 
       this.route.params.subscribe( params=> this.user$ = params.id);
+      auth.handleAuthentication();
   }
   ngOnInit() {
     this.idUpdate=JSON.parse(JSON.stringify((this.user$)));

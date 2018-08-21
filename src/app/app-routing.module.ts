@@ -21,7 +21,7 @@ const routes: Routes = [
 },
 { 
   path: 'calen-api',
-  component: CalenApiComponent,canActivate: [AuthGuard]
+  component: CalenApiComponent
 },
 { path: '**', redirectTo: ''},
 
