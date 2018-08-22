@@ -8,20 +8,23 @@ import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
  {
-    path: 'login',
+    path: '',
     component: LoginComponent
  },
  {
   path: 'details/:id',
-  component: DetailsComponent,canActivate: [AuthGuard]
+  component: DetailsComponent,
+  //canActivate: [AuthGuard]
 },
 {
   path: 'user',
-  component: UserComponent,canActivate: [AuthGuard]
+  component: UserComponent,
+  //canActivate: [AuthGuard]
 },
 { 
   path: 'calen-api',
-  component: CalenApiComponent
+  component: CalenApiComponent,
+  //canActivate: [AuthGuard]
 },
 { path: '**', redirectTo: ''},
 

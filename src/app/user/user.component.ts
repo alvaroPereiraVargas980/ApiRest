@@ -36,10 +36,22 @@ import { AuthServices } from '../oauth2/oauth2.service';
   ]
 })
 export class UserComponent implements OnInit {
+  profile: any;
   users$: Object;
-  constructor(private data: DataService,private router: Router,private auth: AuthServices) { }
+  constructor(private data: DataService,private router: Router,private auth: AuthServices) {
+    //this.profile=JSON.parse(localStorage.getItem('profile'));
+    //console.log(this.profile);
+   }
   
   ngOnInit() {
+    if (this.auth.userProfile) {
+    this.profile = this.auth.userProfile;
+  } else {
+    this.auth.getProfile((err, profile) => {
+      this.profile = profile;
+    });
+  }
+
 
     this.data.getUsers().subscribe(
       data=> this.users$= data
@@ -60,10 +72,12 @@ export class UserComponent implements OnInit {
       alert("User created successfully.");
       console.log(form.value);
       this.resentForm(form);
+      console.log(this.profile);
     })
   
   }
   closeModal(){
     this.router.navigate(['/user']);
+    console.log(this.profile);
   }
 }

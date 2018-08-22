@@ -18,34 +18,30 @@
     </ul>
     <button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
   </nav> -->
-  <nav class="navbar navbar-default" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <nav class="navbar" *ngIf="auth.isAuthenticated()">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" routerLink="user" [class.activated]="currentUrl == '/user'">User</a>
         <a class="navbar-brand" routerLink="calen-api" [class.activated]="currentUrl == '/calen-api'">Calendario</a>
-        <a  *ngIf="!auth.isAuthenticated()" href="#" (click)="auth.login()"></a>
-        <button
-          class="btn btn-primary btn-margin"
-          routerLink="/login">
-            Home
-        </button>
-  
-        <button
-          class="btn btn-primary btn-margin"
-          *ngIf="!auth.isAuthenticated()"
-          (click)="auth.login()">
-            Log In
-        </button>
-  
         <button
           class="btn btn-primary btn-margin"
           *ngIf="auth.isAuthenticated()"
           (click)="auth.logout()">
             Log Out
         </button>
-  
+        <button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
       </div>
     </div>
   </nav>
+
+  <!--<nav class="navbar" *ngIf="isLoggedIn$ | async as isLoggedIn">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="user" [class.activated]="currentUrl == '/user'">User</a>
+        <a class="navbar-brand" routerLink="calen-api" [class.activated]="currentUrl == '/calen-api'">Calendario</a>
+        <button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+      </div>
+    </div>
+  </nav> -->
 
   
