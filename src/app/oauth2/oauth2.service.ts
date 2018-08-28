@@ -33,7 +33,6 @@ export class AuthServices {
         this.setSession(authResult);
         this.router.navigate(['/calen-api']);
         this.loggedIn.next(true);
-        console.log(authResult.idToken);
       } else if (err) {
         this.router.navigate(['/login']);
         console.log(err);

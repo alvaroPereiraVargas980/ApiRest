@@ -42,8 +42,11 @@ public class UserController {
         User user = userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
 
-        user.setUsername(userDetails.getUsername());
-        user.setPassword(userDetails.getPassword());
+        user.setName(userDetails.getName());
+        user.setNickname(userDetails.getNickname());
+        user.setPicture(userDetails.getPicture());
+        user.setSub(userDetails.getSub());
+        user.setUpdated_at(userDetails.getUpdated_at());
 
         User updateUser = userRespository.save(user);
         return updateUser;

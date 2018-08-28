@@ -14,17 +14,17 @@ const routes: Routes = [
  {
   path: 'details/:id',
   component: DetailsComponent,
-  //canActivate: [AuthGuard]
+  canActivate: [AuthGuard]
 },
 {
   path: 'user',
   component: UserComponent,
-  //canActivate: [AuthGuard]
+  canActivate: [AuthGuard]
 },
 { 
   path: 'calen-api',
   component: CalenApiComponent,
-  //canActivate: [AuthGuard]
+  canActivate: [AuthGuard]
 },
 { path: '**', redirectTo: ''},
 

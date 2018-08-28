@@ -15,18 +15,27 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     @NotBlank
-    private String username;
+    private String name;
     @NotBlank
-    private String password;
+    private String nickname;
+    @NotBlank
+    private String picture;
+    @NotBlank
+    private String sub;
+    @NotBlank
+    private String updated_at;
 
     public User(){}
 
     public User(long id){
         this.id=id;
     }
-    public User(String username, String password){
-        this.username=username;
-        this.password=password;
+    public User(String name, String nickname,String picture,String sub,String updated_at){
+        this.name=name;
+        this.nickname=nickname;
+        this.picture=picture;
+        this.sub=sub;
+        this.updated_at=updated_at;
     }
 
     public long getId() {
@@ -37,19 +46,43 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getSub() {
+        return sub;
+    }
+
+    public void setSub(String sub) {
+        this.sub = sub;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

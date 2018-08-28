@@ -39,8 +39,6 @@ export class UserComponent implements OnInit {
   profile: any;
   users$: Object;
   constructor(private data: DataService,private router: Router,private auth: AuthServices) {
-    //this.profile=JSON.parse(localStorage.getItem('profile'));
-    //console.log(this.profile);
    }
   
   ngOnInit() {
@@ -51,33 +49,17 @@ export class UserComponent implements OnInit {
       this.profile = profile;
     });
   }
-
-
     this.data.getUsers().subscribe(
       data=> this.users$= data
     );
 
   }
-  resentForm(form? : NgForm){
-    if(form){
-        form.reset();
-        this.data.selectedUser= new Users;
-    }
-  }
-  comeBack(): void{
-    location.reload();
-  }
+  
   add_user(form : NgForm){
-    this.data.postUser(form.value).subscribe(res=>{
-      alert("User created successfully.");
-      console.log(form.value);
-      this.resentForm(form);
-      console.log(this.profile);
+    this.data.postUser(this.profile).subscribe(res=>{
+      alert("current user added");
     })
   
   }
-  closeModal(){
-    this.router.navigate(['/user']);
-    console.log(this.profile);
-  }
+ 
 }

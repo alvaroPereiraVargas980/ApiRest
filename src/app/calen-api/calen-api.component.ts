@@ -1,7 +1,6 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
-import { EventSesrvice } from './event.service';
 import * as moment from 'moment';
 import { NgModel } from '../../../node_modules/@angular/forms';
 import { DatepickerOptions } from 'ng2-datepicker';
@@ -12,7 +11,7 @@ import { Calendar } from '../model/calendar';
 import { DataService } from '../data.service';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
 import { AuthServices } from '../oauth2/oauth2.service';
-
+import {UserComponent } from '../user/user.component';
 
 @Component({
   selector: 'app-calen-api',
@@ -46,10 +45,12 @@ import { AuthServices } from '../oauth2/oauth2.service';
 export class CalenApiComponent implements OnInit {
   calendars$: Object;
   date: Date;
-  heroes= [];
+ cale:Calendar [];
+ 
   options: DatepickerOptions = {
     locale: enLocale,
     barTitleIfEmpty: 'Click to select a date',
+    displayFormat: 'YYYY-MM-DD',
     placeholder: 'Click to select a date',
     useEmptyBarTitle: false,
     fieldId: 'datapicker',
@@ -59,16 +60,17 @@ export class CalenApiComponent implements OnInit {
   displayEvent: any;
   description:string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  constructor(protected eventService: EventSesrvice,private data: DataService,private auth: AuthServices) {
+  constructor(private data: DataService,private auth: AuthServices) {
     this.date = new Date();
     auth.handleAuthentication();
+    
   }
   ngOnInit() {
     this.data.getCalendars().subscribe(
       data=> this.calendars$= data
     );
-    this.heroes.push(this.calendars$);
-    this.eventService.getEvents().subscribe(data => {
+   
+    this.data.getCalendars().subscribe(data => {
      this.calendarOptions = {
         editable: true,
         defaultDate: Date(),
@@ -86,20 +88,28 @@ export class CalenApiComponent implements OnInit {
     
     }
        eventDrop(mode: any){
-       alert(mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
-       console.log(mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
-       
-      
+       alert(mode.event.id+ " " +mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
+    }
+    eliminar(index: any){
+      if( confirm("are you sure wanna delete this event")){
+      this.data.deleteCalendar(index).subscribe(res=>{
+        confirm("are you sure wanna delete this event");
+        alert("event deleted");
+        console.log("event Deleted");
+      })
+    }
+    else{
+      alert("deleted cancelled");
+    }
     }
     
       dayClick(mode : any) {
         $('#exampleModal').modal('show');
-        $('#start').val(mode.date.format());
+        $('input[name=start]').val(mode.date.format());
+
+        //console.log($('#start').val());
        
       } 
-      clickButton(model: any) {
-        this.displayEvent = model;
-      }
     eventClick(model: any) {
       $('#exampleModal').modal('show');
       model = {
@@ -138,12 +148,17 @@ export class CalenApiComponent implements OnInit {
     }
   }
   saveData(form : NgForm){
+   
     console.log(form.value);
-    this.data.postCalendar(form.value).subscribe(res=>{
+    /*this.data.postCalendar(form.value).subscribe(res=>{
       alert("Calendar created successfully.");
+      
       console.log(form.value);
       this.resentForm(form);
-    });
+    });*/
+  }
+  closeData(form : NgForm){
+    this.resentForm(form);
   }
     
   }

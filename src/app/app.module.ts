@@ -16,7 +16,6 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import * as $AB from 'jquery';
 import * as bootstrap from "bootstrap";
-import { EventSesrvice } from '../app/calen-api/event.service';
 import * as moment from 'moment';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { CalenAuxComponent } from './calen-aux/calen-aux.component';
@@ -46,7 +45,7 @@ import { AuthServices } from '../app/oauth2/oauth2.service';
     NgbModule
    
   ],
-  providers: [AuthService, AuthGuard,EventSesrvice, AuthServices],
+  providers: [AuthService, AuthGuard, AuthServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
