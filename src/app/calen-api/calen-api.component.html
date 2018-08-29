@@ -8,11 +8,13 @@
     <thead>
       <tr [@listStagger]="calendars$">
         <th scope="col">Description</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
         <tr *ngFor="let calendar of calendars$">
-          <td (click)="eliminar(calendar.id)">{{calendar.title}}</td>
+          <td >{{calendar.title}}</td>
+          <td (click)="eliminar(calendar.id)"> X</td>
         </tr>
     </tbody>
   </table>
@@ -21,7 +23,7 @@
   <div class="col-md-9">
         <div *ngIf="calendarOptions">
                 <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (dayClick)="dayClick($event.detail)"(eventDrop)="updateEvent($event.detail)"
-        (eventResize)="updateEvent($event.detail)" (eventDrop)="eventDrop($event.detail)" (clickButton)="clickButton($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
+        (eventResize)="updateEvent($event.detail)" (eventDrop)="eventDrop($event.detail)"  (eventResize)="eventResize($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
 </div>
   </div>
 </div>
@@ -39,7 +41,7 @@
             <div class="container">
                 <div class="row">
                     <form #calendarForm="ngForm">
-                        <div class="col-lg-2">
+                        <div class="col-lg-12">
                             <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Make an appoinment</h1></div>
                             <div class="form-group">
                                 <label for="InputName"> Description</label> 
@@ -61,7 +63,7 @@
                                         <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
                                       </div>
                                 </div>
-                            <input type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(calendarForm)" >
+                            <input  type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(calendarForm)" >
                             
                         </div>
                     </form>
@@ -71,6 +73,58 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeData(calendarForm)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+  
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  <!-- addUserTemplate -->
+            <div class="container">
+                <div class="row">
+                    <form #updateForm="ngForm">
+                        <div class="col-lg-12">
+                            <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Make an appoinment</h1></div>
+                            <div class="form-group">
+                                <label for="InputName"> Description</label> 
+                                <div class="input-group">
+                                    <input type="hidden" class="form-control" name="idUpdate" #name="ngModel" id="idUpdate" [(ngModel)]="id" placeholder="description" >  
+                                    <input type="text" class="form-control" name="titleUpdate" #name="ngModel" id="titleUpdate" [(ngModel)]="title" placeholder="description" >              
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="InputEmail">start</label>
+                                <div class="input-group">
+                                   <input type="text" class="form-control" name="startUpdate" #name="ngModel" id="startUpdate" [(ngModel)]="start" placeholder="start" >             
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">end </label>
+                                    <div class="input-group">
+                                      <input type="text" class="form-control" name="endUpdate" #name="ngModel" id="endUpdate" [(ngModel)]="end" placeholder="start" >             
+                                     </div>
+                                </div>
+                                <div class="form-group">
+                            <input type="submit" value="update" class="btn btn-info float-xs-right" (click)="update(updateForm)" >
+                            <input type="submit" value="delete" class="btn btn-info float-sm-left" (click)="deleteUpdate(updateForm)" >
+                        </div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+  <!-- adduserTemplate -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeData(updateForm)">Close</button>
         </div>
       </div>
     </div>
