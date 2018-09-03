@@ -1,12 +1,27 @@
 
-<h1 align="center"> Users </h1>
-<!-- Button trigger modal -->
+
+<div class="row">
+<div class="col-md-2">
+  <img class="img-cirlce" style="width: 100%" src="{{profile?.picture}}">
+
+</div>
+<div class="col-md-10">
+  <h1>{{profile?.name}}</h1>
+  <p>Nickname: {{profile?.nickname }}</p>
+  <p>Lat Update: {{ profile?.updated_at }}</p>
+  <p>Email: {{ profile?.name }}</p>
+  
+</div>
+</div>
+<!--<h1 align="center"> Users </h1>
+<h1 align="center">{{ profile?.nickname }}' profile</h1>
+
 <div class="col-md-4">
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="button">
   Add_User
 </button>
 
-<!-- Modal -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -17,7 +32,7 @@
         </button>
       </div>
       <div class="modal-body">
-<!-- addUserTemplate -->
+
           <div class="container">
               <div class="row">
                   <form #userForm="ngForm">
@@ -42,22 +57,44 @@
                   </form>
               </div>
             </div>
-<!-- adduserTemplate -->
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
       </div>
     </div>
   </div>
 </div>
 </div>
-<!-- show user method -->
+
 <ul [@listStagger]="users$">
   <li *ngFor="let user of users$">
     <a routerLink="/details/{{ user.id }}">{{ user.username }}</a>
     <ul>
       <li>{{ user.password }}</li>
       <li><a href="">{{ user.password }}</a></li>
+      
     </ul>
   </li>
+</ul>-->
+<h1> Currency list of Users</h1>
+<ul [@listStagger]="users$">
+  <table class="table table-responsive">
+    <thead>
+      <tr [@listStagger]="users$">
+        <th scope="col">NameUser</th>
+        <th scope="col">Nickname</th>
+        <th scope="col">LastUpdated_At</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users$">
+          <td>{{user.name}}</td>
+          <td>{{user.nickname}}</td>
+          <td>{{user.updated_at}}</td>
+        </tr>
+    </tbody>
+  </table>
 </ul>
+
+

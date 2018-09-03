@@ -5,6 +5,8 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
 import { NgForm } from '../../../node_modules/@angular/forms';
 import { Users } from '../model/users';
 import { Router } from '../../../node_modules/@angular/router';
+import { AuthServices } from '../oauth2/oauth2.service';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -34,30 +36,30 @@ import { Router } from '../../../node_modules/@angular/router';
   ]
 })
 export class UserComponent implements OnInit {
+  profile: any;
   users$: Object;
-  constructor(private data: DataService,private router: Router) { }
+  constructor(private data: DataService,private router: Router,private auth: AuthServices) {
+   }
   
   ngOnInit() {
+    if (this.auth.userProfile) {
+    this.profile = this.auth.userProfile;
+  } else {
+    this.auth.getProfile((err, profile) => {
+      this.profile = profile;
+    });
+  }
     this.data.getUsers().subscribe(
       data=> this.users$= data
     );
+
   }
-  resentForm(form? : NgForm){
-    if(form){
-        form.reset();
-        this.data.selectedUser= new Users;
-    }
-  }
-  comeBack(): void{
-    location.reload();
-  }
+  
   add_user(form : NgForm){
-    this.data.postUser(form.value).subscribe(res=>{
-      alert("User created successfully.");
-      console.log(form.value);
-      this.resentForm(form);
-      this.comeBack();
+    this.data.postUser(this.profile).subscribe(res=>{
+      alert("current user added");
     })
   
   }
+ 
 }

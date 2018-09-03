@@ -9,8 +9,18 @@ import { DetailsComponent } from './details/details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { CalendarComponent } from './calendar/calendar.component'; 
 import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from 'ng-fullcalendar';
+import { CalenApiComponent } from './calen-api/calen-api.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
+import * as $AB from 'jquery';
+import * as bootstrap from "bootstrap";
+import * as moment from 'moment';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { CalenAuxComponent } from './calen-aux/calen-aux.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AuthServices } from '../app/oauth2/oauth2.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +29,9 @@ import { FormsModule } from '@angular/forms';
     UserComponent,
     DetailsComponent,
     LoginComponent,
-    CalendarComponent
+    CalenApiComponent,
+    CalenAuxComponent,
+ 
     
   ],
   imports: [
@@ -27,10 +39,13 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule,
+    NgDatepickerModule,
+    NgbModule
    
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, AuthServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
