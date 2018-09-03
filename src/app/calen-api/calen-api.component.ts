@@ -101,8 +101,6 @@ export class CalenApiComponent implements OnInit {
         },
         selectable: true,
         events:data,
-       
-       
       };
     });
     }
@@ -164,7 +162,6 @@ export class CalenApiComponent implements OnInit {
         console.log("delete sucessful");
       })
     }
-    
       dayClick(mode : any) {
         $('#exampleModal').modal('show');
         $('#start').val(mode.date.format());
@@ -179,7 +176,6 @@ export class CalenApiComponent implements OnInit {
           title: model.event.title,
           owner:model.event.owner,
           allDay: model.event.allDay
-      
         },
         duration: {}
       }
@@ -188,9 +184,7 @@ export class CalenApiComponent implements OnInit {
       $('#startUpdate').val(model.event.start.format());
       $('#endUpdate').val(model.event.end.format());
       $('#ownerUpdate').val(model.event.owner);
-      console.log(model.event)
       $('#exampleUpdate').modal('show');
-     
     }
     update(form : NgForm){
       //index1=$('#idUpdate').val();
@@ -224,7 +218,6 @@ export class CalenApiComponent implements OnInit {
       }
     }
   }
-
   resentForm(form? : NgForm){
     if(form){
         form.reset();
@@ -236,7 +229,6 @@ export class CalenApiComponent implements OnInit {
     this.data.postCalendar(form.value).subscribe(res=>{
       console.log('added Sucessfully');
     });
-      
       var calenUser: CalendarUser={
         id:form.value.id,
         title:form.value.title,
@@ -253,11 +245,12 @@ export class CalenApiComponent implements OnInit {
   closeData(form : NgForm){
     this.resentForm(form);
   }
-  getDataTest(){
-   
-     
-  
-
-  }
-    
+  CurrentData(){
+   if(this.profile.nickname){
+     return true;
+   }
+     else{
+       return false;
+     }
+  } 
   }
