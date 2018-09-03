@@ -61,7 +61,7 @@ export class AuthServices {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // Access Token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{ }');
     return new Date().getTime() < expiresAt;
   }
   public getProfile(cb): void {

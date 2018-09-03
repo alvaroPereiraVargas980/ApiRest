@@ -20,7 +20,7 @@ import * as moment from 'moment';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { CalenAuxComponent } from './calen-aux/calen-aux.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { AuthServices } from '../app/oauth2/oauth2.service';
+import { AuthServices } from './oauth2/oauth2.service';
 
 @NgModule({
   declarations: [

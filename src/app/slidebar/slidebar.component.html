@@ -1,23 +1,4 @@
-<!--<nav  *ngIf="isLoggedIn$ | async as isLoggedIn" >
-    <ul>
-        <li>
-          <a routerLink="user" [class.activated]="currentUrl == '/user'">
-            <i class="material-icons">face</i>
-          </a>
-        </li>
-        <li>
-          <a routerLink="calen-api" [class.activated]="currentUrl == '/calen-api'">
-            <i class="material-icons">event</i>
-          </a>
-        </li>  
-        <li>
-          <a  *ngIf="!auth.isAuthenticated()" href="#" (click)="auth.login()">
-            <i>login</i>
-          </a>
-        </li>  
-    </ul>
-    <button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
-  </nav> -->
+
   <nav class="navbar navbar-dark bg-dark" *ngIf="auth.isAuthenticated()">
    
       <div class="navbar-header">
@@ -34,46 +15,3 @@
     </button>
   </form>
   </nav>
-  
-
-  <!--<nav class="navbar" *ngIf="isLoggedIn$ | async as isLoggedIn">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" routerLink="user" [class.activated]="currentUrl == '/user'">User</a>
-        <a class="navbar-brand" routerLink="calen-api" [class.activated]="currentUrl == '/calen-api'">Calendario</a>
-        <button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
-      </div>
-    </div>
-  </nav> -->
-  <!--<nav  class="navbar navbar-dark bg-dark" *ngIf="auth.isAuthenticated()">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-              <a class="navbar-brand" routerLink="user" >User</a>
-          </li>
-          <li class="nav-item">
-              <a class="navbar-brand" routerLink="calen-api">Calendario</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-        </form>
-
-      </div>
-      <button
-            class="btn btn-primary btn-margin"
-            *ngIf="auth.isAuthenticated()"
-            (click)="auth.logout()">
-              Log Out
-          </button>
-    </nav>-->
-   <!-- <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" routerLink="user" [class.activated]="currentUrl == '/user'">User</a>
-        <a class="navbar-brand" routerLink="calen-api" [class.activated]="currentUrl == '/calen-api'">Calendario</a>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </nav>-->

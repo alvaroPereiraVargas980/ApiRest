@@ -13,28 +13,28 @@ import org.springframework.http.ResponseEntity;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/Calendar")
+@RequestMapping("/")
 public class CalendarConrtroller {
     @Autowired
     private CaleRespository caleRespository;
 
 
-    @GetMapping("/GetCalendar")
+    @GetMapping("/GetCalendars")
     public List<Calendar> getAllCalendar(){
 
         return (List<Calendar>) caleRespository.findAll();
     }
-    @PostMapping("/CreateCalendar")
+    @PostMapping("/CreateCalendars")
     public Calendar createCalendar(@Valid @RequestBody Calendar calendar) {
 
         return caleRespository.save(calendar);
     }
-    @GetMapping("/GetsCalendar/{id}")
+    @GetMapping("/GetsCalendars/{id}")
     public Calendar getCalendarById(@PathVariable(value = "id") Long noteId) {
         return caleRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Calendar", "id", noteId));
     }
-    @PutMapping("/PutCalendar/{id}")
+    @PutMapping("/PutCalendars/{id}")
     public Calendar updateCalendar(@PathVariable(value = "id") Long noteId,
                            @Valid @RequestBody Calendar calendarDetails) {
 
@@ -49,7 +49,7 @@ public class CalendarConrtroller {
         Calendar updateCalendar = caleRespository.save(calendar);
           return updateCalendar;
     }
-    @DeleteMapping("/DeleteCalendar/{id}")
+    @DeleteMapping("/DeleteCalendars/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         Calendar calendar = caleRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Calendar", "id", noteId));

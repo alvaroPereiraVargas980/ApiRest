@@ -14,28 +14,28 @@ import org.springframework.http.ResponseEntity;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/")
 public class UserController {
     @Autowired
     private UserRespository userRespository;
 
-    @PostMapping("/CreateUser")
+    @PostMapping("/CreateUsers")
     public User createNote(@Valid @RequestBody User user) {
 
         return userRespository.save(user);
     }
-    @GetMapping("/GetUser")
+    @GetMapping("/GetUsers")
     public List<User> getAllNotes(){
 
         return (List<User>) userRespository.findAll();
     }
 
-    @GetMapping("/GetUser/{id}")
+    @GetMapping("/GetUsers/{id}")
     public User getNoteById(@PathVariable(value = "id") Long noteId) {
         return userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
     }
-    @PutMapping("/PutUser/{id}")
+    @PutMapping("/PutUsers/{id}")
     public User updateUser(@PathVariable(value = "id") Long noteId,
                            @Valid @RequestBody User userDetails) {
 
@@ -52,7 +52,7 @@ public class UserController {
         return updateUser;
     }
 
-    @DeleteMapping("/DeleteUser/{id}")
+    @DeleteMapping("/DeleteUsers/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         User user = userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
