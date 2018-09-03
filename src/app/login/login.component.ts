@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '../../../node_modules/@angular/forms';
-import { Router } from '../../../node_modules/@angular/router';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 //import { AuthService } from './../auth/auth.service';
 import { AuthServices } from '../oauth2/oauth2.service';
 @Component({

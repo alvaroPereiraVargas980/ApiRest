@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
-import { NgForm } from '../../../node_modules/@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Users } from '../model/users';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { AuthServices } from '../oauth2/oauth2.service';
 
 @Component({
@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
 
   }
   
-  add_user(form : NgForm){
+  add_user(){
     this.data.postUser(this.profile).subscribe(res=>{
       alert("current user added");
     })
