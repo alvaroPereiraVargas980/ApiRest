@@ -50,7 +50,7 @@
                             <div class="form-group">
                               <label for="InputName">Owner</label> 
                               <div class="input-group">
-                                  <input type="text" class="form-control" name="owner" #name="ngModel" id="owner" [(ngModel)]="data.selectedCalendar.owner" placeholder="owner" >              
+                                  <input type="text"  [disabled]="true" class="form-control" name="owner" #name="ngModel" id="owner" [(ngModel)]="data.selectedCalendar.owner" placeholder="owner" >              
                               </div>
                           </div>
                             <div class="form-group">
@@ -59,20 +59,27 @@
                                     <input type="text" class="form-control" name="title" #name="ngModel" id="title" [(ngModel)]="data.selectedCalendar.title" placeholder="description" >              
                                 </div>
                             </div>
-                            <div class="form-group c1">
+                            <div class="form-group">
                                 <label for="InputEmail">start</label>
                                 <div class="input-group">
                                    <input type="text" class="form-control" name="start" #name="ngModel" id="start" [(ngModel)]="data.selectedCalendar.start" placeholder="start" >             
-                                    
-
                                   </div>
                             </div>
-                            <div class="form-group c2">
+                            <div class="form-group">
                                     <label for="InputName">end </label>
                                     <div class="datepicker-container">
-                                        <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
+                                        <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options"  id="end" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
                                       </div>
                                 </div>
+
+                                <div class="form-group">
+                                  <label for="InputName">time picker :</label>
+                                  <input type="time" id="startPicker" name="startPicker" [(ngModel)]="startPicker"
+                                     placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
+                                     to
+                                     <input type="time" id="endPicker" name="endPicker" [(ngModel)]="endPicker"
+                                     placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
+                              </div>
                             <input  type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(calendarForm)" >
                             
                         </div>
@@ -108,7 +115,7 @@
                                 <div class="form-group">
                                   <label for="InputEmail">Owner</label>
                                   <div class="input-group">
-                                     <input type="text" class="form-control" name="ownerUpdate" #name="ngModel" id="ownerUpdate" [(ngModel)]="ownerUpdate" placeholder="ownerUpdate" >             
+                                     <input type="text"  [disabled]="true" class="form-control" name="ownerUpdate" #name="ngModel" id="ownerUpdate" [(ngModel)]="ownerUpdate" placeholder="ownerUpdate" >             
                                     </div>
                               </div> 
                               <div class="form-group">

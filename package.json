@@ -34,6 +34,7 @@
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "ng-fullcalendar": "^1.6.2",
+    "ng-pick-datetime": "^5.2.6",
     "ng2-datepicker": "^3.1.1",
     "pg-calendar": "^1.4.30",
     "rxjs": "^6.0.0",
