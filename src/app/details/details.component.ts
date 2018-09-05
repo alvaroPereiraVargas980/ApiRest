@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ActivatedRoute, Router } from "@angular/router"
-import { NgForm } from '../../../node_modules/@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Users } from '../model/users';
 import { AuthServices } from '../oauth2/oauth2.service';
 

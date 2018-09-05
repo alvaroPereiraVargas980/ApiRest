@@ -21,6 +21,7 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { CalenAuxComponent } from './calen-aux/calen-aux.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AuthServices } from './oauth2/oauth2.service';
+//import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { AuthServices } from './oauth2/oauth2.service';
     LoginComponent,
     CalenApiComponent,
     CalenAuxComponent,
- 
+  
     
   ],
   imports: [
@@ -42,7 +43,11 @@ import { AuthServices } from './oauth2/oauth2.service';
     FormsModule,
     FullCalendarModule,
     NgDatepickerModule,
-    NgbModule
+    NgbModule,
+
+    //OwlDateTimeModule, 
+    //OwlNativeDateTimeModule,
+    
    
   ],
   providers: [AuthService, AuthGuard, AuthServices],

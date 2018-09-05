@@ -57,13 +57,24 @@ export class CalenApiComponent implements OnInit {
   model:any;
   itemsArray = [];
   storage:any;
+  controlProfile:any;
+  timeStart: any;
+  timeEnd:any;
+  hours:any;
+  minutes:any;
+  endPicker:any;
+  owner: any;
+
+
   options: DatepickerOptions = {
     locale: enLocale,
     barTitleIfEmpty: 'Click to select a date',
     displayFormat: 'YYYY-MM-DD',
+    barTitleFormat: 'MMMM YYYY',
     placeholder: 'Click to select a date',
     useEmptyBarTitle: false,
     fieldId: 'datapicker',
+
   };
 
   calendarOptions: Options;
@@ -73,8 +84,7 @@ export class CalenApiComponent implements OnInit {
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
   constructor(private data: DataService,private auth: AuthServices) {
     this.date = new Date();
-    auth.handleAuthentication();
-    
+    auth.handleAuthentication(); 
   }
   ngOnInit() {
     this.data.getCalendUser().subscribe(
@@ -94,6 +104,7 @@ export class CalenApiComponent implements OnInit {
         editable: true,
         defaultDate: Date(),
         eventLimit: false,
+        slotDuration:'00:15:00',
         header: {
           left: 'prev,next today',
           center: 'title',
@@ -101,17 +112,16 @@ export class CalenApiComponent implements OnInit {
         },
         selectable: true,
         events:data,
-       
-       
       };
     });
     }
        eventDrop(mode: any){
-       alert(mode.event.id+ " " +mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
+       //alert(mode.event.id+ " " +mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
         this.id=mode.event.id;
         this.title=mode.event.title;
-        this.start=mode.event.start.format();
-        this.end=mode.event.end.format();
+        this.start=mode.event.start;
+        this.end=mode.event.end;
+        this.owner=mode.event.owner;
         var CalenUser: CalendarUser={
           id:this.id,
           title:this.title,
@@ -119,19 +129,23 @@ export class CalenApiComponent implements OnInit {
           end:this.end,
           owner:this.profile.nickname
         };
-        this.index=mode.event.id;
-        console.log(CalenUser);
-        this.data.putCalendarUser(this.index,CalenUser).subscribe(res=>{
-          console.log("updated sucessful");
-          //console.log(Calen+" "+ this.index);
-        })
+        if(mode.event.owner === this.profile.nickname){
+          this.index=mode.event.id;
+      
+          this.data.putCalendarUser(this.index,CalenUser).subscribe(res=>{
+            console.log("updated sucessful");
+          })
+        }else{
+          alert("you are not owner");
+        }
       }
       eventResize(mode: any){
-        alert(mode.event.id+ " " +mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
+       // alert(mode.event.id+ " " +mode.event.title + " " + mode.event.start.format()+ " " + mode.event.end.format());
         this.id=mode.event.id;
         this.title=mode.event.title;
-        this.start=mode.event.start.format();
-        this.end=mode.event.end.format();
+        this.start=mode.event.start;
+        this.end=mode.event.end;
+        this.owner=mode.event.owner;
         var CalenUser: CalendarUser={
           id:this.id,
           title:this.title,
@@ -139,19 +153,28 @@ export class CalenApiComponent implements OnInit {
           end:this.end,
           owner:this.profile.nickname
         };
-        this.index=mode.event.id;
+        if(mode.event.owner === this.profile.nickname){
+          this.index=mode.event.id;
         this.data.putCalendarUser(this.index,CalenUser).subscribe(res=>{
           console.log("updated sucessful");
         })
+
+        } else{
+          alert("you are not owner")
+        }
       }
-    eliminar(index: any){
+    eliminar(index: CalendarUser){
       if( confirm("are you sure wanna delete this event")){
-      this.data.deleteCalendarUser(index).subscribe(res=>{
+        if( index.owner === this.profile.nickname){
+      this.data.deleteCalendarUser(index.id).subscribe(res=>{
         confirm("are you sure wanna delete this event");
         alert("event deleted");
         console.log("event Deleted");
       })
+    }else{
+      alert("you are not owner");
     }
+  }
     else{
       alert("deleted cancelled");
     }
@@ -164,13 +187,13 @@ export class CalenApiComponent implements OnInit {
         console.log("delete sucessful");
       })
     }
-    
       dayClick(mode : any) {
         $('#exampleModal').modal('show');
         $('#start').val(mode.date.format());
         $('#owner').val(this.profile.nickname);
       } 
     eventClick(model: any) {
+      console.log(model.event)
       model = {
         event: {
           id: model.event.id,
@@ -179,21 +202,26 @@ export class CalenApiComponent implements OnInit {
           title: model.event.title,
           owner:model.event.owner,
           allDay: model.event.allDay
-      
         },
         duration: {}
       }
+      if(model.event.owner===this.profile.nickname){
+        console.log("averything right");
+       
       $('#idUpdate').val(model.event.id);
       $('#titleUpdate').val(model.event.title);
-      $('#startUpdate').val(model.event.start.format());
-      $('#endUpdate').val(model.event.end.format());
+      $('#startUpdate').val(model.event.start.format('YYYY-MM-DD:h:mm'));
+      $('#endUpdate').val(model.event.end.format('YYYY-MM-DD:h:mm'));
       $('#ownerUpdate').val(model.event.owner);
-      console.log(model.event)
+      this.controlProfile=model.event.owner;
       $('#exampleUpdate').modal('show');
-     
+      console.log(this.controlProfile);
+      }else{
+          alert("you are not owner")
+      }
     }
     update(form : NgForm){
-      //index1=$('#idUpdate').val();
+      
       form.value.idUpdate= $('#idUpdate').val();
       form.value.titleUpdate= $('#titleUpdate').val();
       form.value.startUpdate= $('#startUpdate').val();
@@ -206,7 +234,7 @@ export class CalenApiComponent implements OnInit {
         owner:this.profile.nickname
       };
       this.index=JSON.parse(form.value.idUpdate);
-      console.log(Calen+' '+ this.index);
+     // console.log(Calen+' '+ this.index);
       this.data.putCalendarUser(this.index,Calen).subscribe(res=>{
         console.log("update successful");
       });
@@ -224,7 +252,6 @@ export class CalenApiComponent implements OnInit {
       }
     }
   }
-
   resentForm(form? : NgForm){
     if(form){
         form.reset();
@@ -233,31 +260,55 @@ export class CalenApiComponent implements OnInit {
   }
   saveData(form : NgForm){
    form.value.start=$('#start').val();
-    this.data.postCalendar(form.value).subscribe(res=>{
-      console.log('added Sucessfully');
-    });
-      
+    this.endPicker=$('#datapicker').val();
       var calenUser: CalendarUser={
         id:form.value.id,
         title:form.value.title,
         start:form.value.start,
-        end:form.value.end,
+        end:this.endPicker,
         owner:this.profile.nickname
       };
-      alert("Calendar created successfully.");
-      console.log(calenUser);
-      this.data.postCalendUser(calenUser).subscribe(res=>{
-        console.log("saved successfully");
-      })
+        this.timepicker(calenUser, form);
   }
   closeData(form : NgForm){
     this.resentForm(form);
   }
-  getDataTest(){
-   
-     
-  
-
+  CurrentData(){
+   if(this.profile.nickname==this.controlProfile){
+     return true;
+   }
+     else{
+       return false;
+     }
   }
+  timepicker(cale: CalendarUser, form: NgForm){
+      this.timeStart = $('#startPicker').val();
     
+       this.timeEnd = $('#endPicker').val();
+      
+         this.hours = this.timeStart.split(':')[0] - this.timeEnd.split(':')[0];
+        this.minutes = this.timeStart.split(':')[1] - this.timeEnd.split(':')[1];
+      
+      this.minutes = this.minutes.toString().length<2?'0'+this.minutes:this.minutes;
+      if(this.minutes<0){ 
+          this.hours--;
+          this.minutes = 60 + this.minutes;
+      }
+      this.hours = this.hours.toString().length<2?'0'+this.hours:this.hours;
+      //$('#delay').val(this.hours + ':' + this.minutes);
+      //console.log(this.hours+ ':' + this.minutes);
+      //console.log(this.timeStart + ':' + this.timeEnd);
+      cale={
+        id:form.value.id,
+        title:form.value.title,
+        start:form.value.start +' ' +this.timeStart,
+        end:this.endPicker+' ' +this.timeEnd,
+        owner:this.profile.nickname
+      }
+      this.data.postCalendUser(cale).subscribe(res=>{
+        alert("added succesfull");
+        //console.log(cale);
+      })
+  } 
+ 
   }
