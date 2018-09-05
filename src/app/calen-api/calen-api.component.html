@@ -18,7 +18,7 @@
         <tr *ngFor="let calendar of calendars$">
           <td >{{calendar.title}}</td>
           <td >{{calendar.owner}}</td>
-          <td (click)="eliminar(calendar.id)"> X</td>
+          <td (click)="eliminar(calendar.id)"></td>
         </tr>
     </tbody>
   </table>
@@ -70,6 +70,7 @@
                                     <div class="datepicker-container">
                                         <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options"  id="end" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
                                       </div>
+                                      <!--<input type="text" class="form-control" name="endPicker" #name="ngModel" id="endPicker" [(ngModel)]="data.selectedCalendar.endPicker" placeholder="end" > --> 
                                 </div>
 
                                 <div class="form-group">
