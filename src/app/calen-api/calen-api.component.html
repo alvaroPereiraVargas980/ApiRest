@@ -11,14 +11,14 @@
       <tr [@listStagger]="calendars$">
         <th scope="col">Description</th>
         <th scope="col">Owner</th>
-        <th scope="col">Delete</th>
+        <!--<th scope="col">Delete</th>-->
       </tr>
     </thead>
     <tbody>
         <tr *ngFor="let calendar of calendars$">
           <td >{{calendar.title}}</td>
           <td >{{calendar.owner}}</td>
-          <td (click)="eliminar(calendar.id)"></td>
+          <!--<td (click)="eliminar(calendar.id)"></td>-->
         </tr>
     </tbody>
   </table>

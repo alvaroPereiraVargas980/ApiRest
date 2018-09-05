@@ -131,7 +131,7 @@ export class CalenApiComponent implements OnInit {
         };
         if(mode.event.owner === this.profile.nickname){
           this.index=mode.event.id;
-      
+          
           this.data.putCalendarUser(this.index,CalenUser).subscribe(res=>{
             console.log("updated sucessful");
           })
