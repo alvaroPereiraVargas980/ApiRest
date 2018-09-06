@@ -1,4 +1,3 @@
-<p>Example of the range selection</p>
 
 <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t">
 </ngb-datepicker>
@@ -13,14 +12,7 @@
     {{ date.day }}
   </span>
 </ng-template>
-
-<hr>
-
-<pre>From: {{ fromDate | json }} </pre>
-<pre>To: {{ toDate | json }} </pre>
-
-
-   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal fade" id="modalCale-aux" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -39,19 +31,19 @@
                             <div class="form-group">
                               <label for="InputName">Owner</label> 
                               <div class="input-group">
-                                  <input type="text"  [disabled]="true" class="form-control" name="owner" #name="ngModel" id="owner" [(ngModel)]="data.selectedCalendar.owner" placeholder="owner" >              
+                                  <input type="text"  [disabled]="true" class="form-control" name="ownerAux" #name="ngModel" id="ownerAux" [(ngModel)]="data.selectedCalendar.ownerAux" placeholder="owner" >              
                               </div>
                           </div>
                             <div class="form-group">
                                 <label for="InputName"> Description</label> 
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="title" #name="ngModel" id="title" [(ngModel)]="data.selectedCalendar.title" placeholder="description" >              
+                                    <input type="text" class="form-control" name="titleAux" #name="ngModel" id="titleAux" [(ngModel)]="data.selectedCalendar.titleAux" placeholder="description" >              
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="InputEmail">start</label>
                                 <div class="input-group">
-                                   <input type="text" class="form-control" name="start" #name="ngModel" id="start" [(ngModel)]="data.selectedCalendar.start" placeholder="start" >             
+                                   <input type="text" class="form-control"  [disabled]="true" name="startAux" #name="ngModel" id="startAux" [(ngModel)]="data.selectedCalendar.startAux" placeholder="start" >             
                                   </div>
                             </div>
                             <div class="form-group">
@@ -60,7 +52,7 @@
                                         <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options"  id="end" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
                                       </div>-->
                                       <div class="input-group">
-                                        <input type="text" class="form-control" name="end" #name="ngModel" id="end" [(ngModel)]="data.selectedCalendar.end" placeholder="end" >             
+                                        <input type="text" class="form-control"  [disabled]="true" name="endAux" #name="ngModel" id="endAux" [(ngModel)]="data.selectedCalendar.endAux" placeholder="end" >             
                                        </div>
                                 </div>
 

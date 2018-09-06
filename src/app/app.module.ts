@@ -21,7 +21,7 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { CalenAuxComponent } from './calen-aux/calen-aux.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AuthServices } from './oauth2/oauth2.service';
-//import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+//import {NgAutoCompleteModule} from "ng-auto-complete";
 
 @NgModule({
   declarations: [
@@ -44,11 +44,7 @@ import { AuthServices } from './oauth2/oauth2.service';
     FullCalendarModule,
     NgDatepickerModule,
     NgbModule,
-
-    //OwlDateTimeModule, 
-    //OwlNativeDateTimeModule,
-    
-   
+   // NgAutoCompleteModule
   ],
   providers: [AuthService, AuthGuard, AuthServices],
   bootstrap: [AppComponent]

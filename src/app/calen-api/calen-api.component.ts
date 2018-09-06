@@ -14,9 +14,10 @@ import { AuthServices } from '../oauth2/oauth2.service';
 import {UserComponent } from '../user/user.component';
 import { toInteger } from '../../../node_modules/@ng-bootstrap/ng-bootstrap/util/util';
 import { CalendarUser } from '../model/calendarUser';
-
-
-
+import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {Observable, Subject, merge} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+const states = ['monkeydonkey25','alvaropereira980'];
 @Component({
   selector: 'app-calen-api',
   templateUrl: './calen-api.component.html',
@@ -48,6 +49,7 @@ import { CalendarUser } from '../model/calendarUser';
 
 export class CalenApiComponent implements OnInit {
   calendars$: Object;
+  edited: boolean;
   date: Date;
   id:string;
   title:string;
@@ -64,7 +66,7 @@ export class CalenApiComponent implements OnInit {
   minutes:any;
   endPicker:any;
   owner: any;
-
+  models: any;
 
   options: DatepickerOptions = {
     locale: enLocale,
@@ -82,11 +84,28 @@ export class CalenApiComponent implements OnInit {
   description:string;
   profile:any;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+  @ViewChild('instance') instance: NgbTypeahead;
+
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  search = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => (term === '' ? states
+        : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
+  
   constructor(private data: DataService,private auth: AuthServices) {
     this.date = new Date();
     auth.handleAuthentication(); 
   }
   ngOnInit() {
+    this.edited=false;
     this.data.getCalendUser().subscribe(
       data=> this.calendars$= data
     );
@@ -310,5 +329,8 @@ export class CalenApiComponent implements OnInit {
         //console.log(cale);
       })
   } 
+  showEditart(){
+   this.edited=true;
+  }
  
   }
