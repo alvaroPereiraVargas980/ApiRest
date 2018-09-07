@@ -85,6 +85,7 @@ export class CalenAuxComponent implements OnInit {
   saveData(form : NgForm){
    this.startPicker= $('#startAux').val();
     this.endPicker=$('#endAux').val();
+    console.log(form.value);
        var calenUser: CalendarUser={
          id:form.value.idAux,
          title:form.value.titleAux,
@@ -120,7 +121,7 @@ export class CalenAuxComponent implements OnInit {
       owner:this.profile.nickname
     }
     //this.data.postCalendUser(cale).subscribe(res=>{
-      alert("added succesfull");
+     // alert("added succesfull");
       console.log(cale);
    //})
 } 

@@ -1,10 +1,10 @@
 package com.login.demologin.controller;
 
-import com.login.demologin.Calrepository.CaleRespository;
+//import com.login.demologin.Calrepository.CaleRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.login.demologin.User.User;
-import com.login.demologin.calendar.Calendar;
+//import com.login.demologin.calendar.Calendar;
 import com.login.demologin.Repository.UserRespository;
 import javax.validation.Valid;
 import java.util.List;
@@ -28,6 +28,11 @@ public class UserController {
     public List<User> getAllNotes(){
 
         return (List<User>) userRespository.findAll();
+    }
+    @GetMapping("/GetAutocomplete")
+    public List<Object> testuser(){
+
+        return (List<Object>) userRespository.findByNickname();
     }
 
     @GetMapping("/GetUsers/{id}")

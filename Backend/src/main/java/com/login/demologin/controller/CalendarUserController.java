@@ -23,6 +23,12 @@ import java.util.List;
 
             return (List<CalendarUser>) calendarUserRepository.findAll();
         }
+        @GetMapping("/test")
+        public List<CalendarUser> test(){
+
+          return (List<CalendarUser>) calendarUserRepository.findByTitle();
+        }
+
         @PostMapping("/CreateCalendarUsers")
         public CalendarUser createCalendar(@Valid @RequestBody CalendarUser calendar) {
 

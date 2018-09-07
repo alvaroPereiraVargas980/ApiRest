@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface CalendarUserRepository extends CrudRepository<CalendarUser, Long>{
-   @Query(value = "SELECT * FROM accounted.calendar_user  WHERE accounted.calendar_user.owner='alvaropereira980'")
+   @Query(value = "SELECT * FROM calendar_user  WHERE owner='alvaropereira980'",nativeQuery = true)
    public List<CalendarUser> findByTitle();
 }

@@ -41,6 +41,11 @@ export class DataService {
 deleteUser(_id : string){
   return this.http.delete('http://localhost:8080/DeleteUsers'+ `/${_id}`);
 }
+
+
+
+
+
 //this section belows to CalendarUser section 
   postCalendUser(calen : CalendarUser){
     return this.http.post('http://localhost:8080/CreateCalendarUsers',calen)
@@ -48,29 +53,18 @@ deleteUser(_id : string){
   getCalendUser(){
     return this.http.get('http://localhost:8080/GetCalendarUsers')
   }
+  getCalendUserId(id :string){
+    return this.http.get('http://localhost:8080/GetsCalendarUsers/'+ id)
+  }
   putCalendarUser(id: string,calendar: Calendar){
     return this.http.put('http://localhost:8080/PutCalendarUsers/'+ id, calendar);
   }
   deleteCalendarUser(id :string){
     return this.http.delete('http://localhost:8080/DeleteCalendarUsers'+ `/${id}`);
   }
-//this section belows to Calendar section
-  
- 
-  getCalendars(){
-    return this.http.get('http://localhost:8080/GetCalendars');
+  test(){
+    return this.http.get('http://localhost:8080/GetAutocomplete');
   }
-  getCalendar(calendarId) {
-    return this.http.get('http://localhost:8080/GetsCalendars/'+calendarId)
-}
-postCalendar(calendar: Calendar){
-  return this.http.post('http://localhost:8080/CreateCalendars',calendar);
-}
-putCalendar(id: string,calendar: Calendar){
-  return this.http.put('http://localhost:8080/PutCalendars/'+ id, calendar);
-}
-deleteCalendar(id :string){
-  return this.http.delete('http://localhost:8080/DeleteCalendars'+ `/${id}`);
-}
 
+//this section belows to Calendar section
 }

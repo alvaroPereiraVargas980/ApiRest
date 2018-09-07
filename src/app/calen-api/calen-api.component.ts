@@ -17,7 +17,7 @@ import { CalendarUser } from '../model/calendarUser';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject, merge} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
-const states = ['monkeydonkey25','alvaropereira980'];
+
 @Component({
   selector: 'app-calen-api',
   templateUrl: './calen-api.component.html',
@@ -67,6 +67,8 @@ export class CalenApiComponent implements OnInit {
   endPicker:any;
   owner: any;
   models: any;
+  states:any;
+  cale$: any;
 
   options: DatepickerOptions = {
     locale: enLocale,
@@ -95,8 +97,8 @@ export class CalenApiComponent implements OnInit {
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? states
-        : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+      map(term => (term === '' ? this.states
+        : this.states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
   
@@ -105,6 +107,7 @@ export class CalenApiComponent implements OnInit {
     auth.handleAuthentication(); 
   }
   ngOnInit() {
+    this.getAutocomplete();
     this.edited=false;
     this.data.getCalendUser().subscribe(
       data=> this.calendars$= data
@@ -207,7 +210,7 @@ export class CalenApiComponent implements OnInit {
       })
     }
       dayClick(mode : any) {
-        $('#exampleModal').modal('show');
+        $('#principal').modal('show');
         $('#start').val(mode.date.format());
         $('#owner').val(this.profile.nickname);
       } 
@@ -279,7 +282,9 @@ export class CalenApiComponent implements OnInit {
   }
   saveData(form : NgForm){
    form.value.start=$('#start').val();
+   form.value.title=$('#title').val();
     this.endPicker=$('#datapicker').val();
+    console.log(form.value.title);
       var calenUser: CalendarUser={
         id:form.value.id,
         title:form.value.title,
@@ -293,7 +298,7 @@ export class CalenApiComponent implements OnInit {
     this.resentForm(form);
   }
   CurrentData(){
-   if(this.profile.nickname==this.controlProfile){
+   if(this.profile.nickname===this.controlProfile){
      return true;
    }
      else{
@@ -301,9 +306,9 @@ export class CalenApiComponent implements OnInit {
      }
   }
   timepicker(cale: CalendarUser, form: NgForm){
-      this.timeStart = $('#startPicker').val();
+      this.timeStart = $('#startPickerPrin').val();
     
-       this.timeEnd = $('#endPicker').val();
+       this.timeEnd = $('#endPickerPrin').val();
       
          this.hours = this.timeStart.split(':')[0] - this.timeEnd.split(':')[0];
         this.minutes = this.timeStart.split(':')[1] - this.timeEnd.split(':')[1];
@@ -324,13 +329,30 @@ export class CalenApiComponent implements OnInit {
         end:this.endPicker+' ' +this.timeEnd,
         owner:this.profile.nickname
       }
-      this.data.postCalendUser(cale).subscribe(res=>{
+     this.data.postCalendUser(cale).subscribe(res=>{
         alert("added succesfull");
-        //console.log(cale);
+        console.log(cale);
       })
   } 
-  showEditart(){
-   this.edited=true;
+  getAutocomplete(){
+    this.data.test().subscribe(res=>{
+      this.states=res;
+      console.log(res);
+    })
   }
- 
+  open(id:any){
+    $('#friends').modal('show');
+    this.generate(id); 
+  }
+  generate(id:any){
+    this.data.getCalendUserId(JSON.stringify(id)).subscribe( res=>{
+    this.cale$=res;
+      console.log(this.cale$);
+    }
+    )
+  console.log(this.cale$);
+   
+
+  }
+  
   }

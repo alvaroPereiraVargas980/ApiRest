@@ -23,6 +23,7 @@ public class CalendarUser {
     @NotBlank
     private String owner;
 
+
     public CalendarUser() {
     }
 

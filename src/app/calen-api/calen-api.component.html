@@ -3,8 +3,8 @@
          <app-calen-aux></app-calen-aux>
   
 
- <!--<button (click)="getDataTest()">data</button>-->
- <h2>{{ profile?.nickname}}</h2>
+ <button (click)="open()">data</button>
+ <h4>{{ profile?.nickname}}</h4>
 <ul [@listStagger]="calendars$">
   <table class="table table-responsive">
     <thead>
@@ -17,7 +17,7 @@
     <tbody>
         <tr *ngFor="let calendar of calendars$">
           <td >{{calendar.title}}</td>
-          <td >{{calendar.owner}}</td>
+          <td (click)="open(calendar.id)">{{calendar.owner}}</td>
           <!--<td (click)="eliminar(calendar.id)"></td>-->
         </tr>
     </tbody>
@@ -31,7 +31,7 @@
 </div>
   </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="principal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -65,17 +65,6 @@
                                    <input type="text" class="form-control" name="start" #name="ngModel" id="start" [(ngModel)]="data.selectedCalendar.start" placeholder="start" >             
                                   </div>
                             </div>
-                            <div class="form-group" *ngIf="edited">
-                              <label for="InputEmail">collaborator</label>
-                              <div class="input-group">
-                                <input id="typeahead-focus" name="model" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)"
-                                #instance="ngbTypeahead"
-                              >            
-                                </div>
-                          </div>
-
-
-                            
                             <div class="form-group">
                                     <label for="InputName">end </label>
                                     <div class="datepicker-container">
@@ -86,14 +75,11 @@
                               
                                 <div class="form-group">
                                   <label for="InputName">time picker :</label>
-                                  <input type="time" id="startPicker" name="startPicker" [(ngModel)]="startPicker"
+                                  <input type="time" id="startPickerPrin" name="startPickerPrin" [(ngModel)]="startPicker"
                                      placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
                                      to
-                                     <input type="time" id="endPicker" name="endPicker" [(ngModel)]="endPicker"
+                                     <input type="time" id="endPickerPrin" name="endPickerPrin" [(ngModel)]="endPicker"
                                      placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
-                                     <div class="form-check form-check form-check-inline" >
-                                      Mate: <input class="form-check-input" type="checkbox" value="" id="edited" (click)="showEditart()">
-                                    </div>
                               </div>
                             <input  type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(calendarForm)" >
                             
@@ -169,3 +155,81 @@
     </div>
   </div>
 
+
+
+
+
+
+
+
+  <div class="modal fade" id="friends" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+  
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  <!-- addUserTemplate -->
+            <div class="container">
+                <div class="row">
+                    <form #calendarForm="ngForm">
+                        <div class="col-lg-12">
+                            <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Select your collaborators</h1></div>  
+                            
+                            
+                            
+                              <table class="table table-responsive">
+                                <thead>
+                                  <tr >
+                                    <th scope="col">Owner</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">End</th>
+                                    <!--<th scope="col">Delete</th>-->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let calendar of calendar$">
+                                      <td >{{calendar.owner}}</td>
+                                      <td >{{calendar.title}}</td>
+                                      <td >{{calendar.start}}</td>
+                                      <td >{{calendar.end}}</td>
+                                      <!--<td (click)="eliminar(calendar.id)"></td>-->
+                                    </tr>
+                                </tbody>
+                              </table>
+                          
+
+                      
+                      
+                            <div class="form-group">
+                        <label for="InputEmail">collaborator</label>
+                        <div class="input-group">
+                          <input id="typeahead-focus" name="model" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #instance="ngbTypeahead">            
+                          </div>
+                    </div> 
+                            <div class="form-group">
+                              <label for="InputEmail"> Permissions</label>
+                              <div class="input-group">
+                                view_event<input type="checkbox" > 
+                                create_event<input type="checkbox" > 
+                                update_event<input type="checkbox" > 
+                                delete_envet<input type="checkbox" >             
+                                </div>
+                          </div>  
+                            <input  type="submit"  value="save" class="btn btn-info float-xs-right" > 
+                        </div>
+                    </form>
+                </div>
+              </div>
+  <!-- adduserTemplate -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
