@@ -42,9 +42,9 @@ deleteUser(_id : string){
   return this.http.delete('http://localhost:8080/DeleteUsers'+ `/${_id}`);
 }
 
-
-
-
+getUsersCalendar(userName: string){
+  return this.http.get('http://localhost:8080/GetUserCalendar/'+userName);
+}
 
 //this section belows to CalendarUser section 
   postCalendUser(calen : CalendarUser){

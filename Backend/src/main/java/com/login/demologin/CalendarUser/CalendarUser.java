@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "CalendarUser")
+@Table(name = "Calendar")
 public class CalendarUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
