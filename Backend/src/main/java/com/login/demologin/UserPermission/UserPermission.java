@@ -1,5 +1,8 @@
 package com.login.demologin.UserPermission;
 
+import com.login.demologin.CalendarUser.CalendarUser;
+import com.login.demologin.User.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.Entity;
@@ -7,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
     @Entity
     @Table(name = "permission")
@@ -21,7 +27,15 @@ import javax.persistence.*;
 
         private String view;
 
-        private long user_id;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_user")
+        private User user;
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_calendar")
+        private CalendarUser calendarUser;
+
+
 
         public UserPermission() {
         }
@@ -30,11 +44,11 @@ import javax.persistence.*;
             this.id = id;
         }
 
-        public UserPermission(String update, String delete, String view, long user_id) {
-            this.update = update;
+        public UserPermission(String update, String delete, String view) {
+
             this.delete = delete;
+            this.update = update;
             this.view = view;
-            this.user_id = user_id;
 
         }
 
@@ -70,12 +84,20 @@ import javax.persistence.*;
             this.view = view;
         }
 
-        public long getUser_id() {
-            return user_id;
+        public User getUser() {
+            return user;
         }
 
-        public void setUser_id(long user_id) {
-            this.user_id = user_id;
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public CalendarUser getCalendarUser() {
+            return calendarUser;
+        }
+
+        public void setCalendarUser(CalendarUser calendarUser) {
+            this.calendarUser = calendarUser;
         }
     }
 

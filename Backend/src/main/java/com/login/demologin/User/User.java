@@ -1,12 +1,15 @@
 package com.login.demologin.User;
 
+import com.login.demologin.CalendarUser.CalendarUser;
+import com.login.demologin.UserPermission.UserPermission;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -85,4 +88,6 @@ public class User {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
+
 }

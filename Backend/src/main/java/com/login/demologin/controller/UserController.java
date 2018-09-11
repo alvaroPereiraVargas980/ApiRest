@@ -40,7 +40,7 @@ public class UserController {
         return userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
     }
-    @PutMapping("/PutUsers/{id}")
+   /* @PutMapping("/PutUsers/{id}")
     public User updateUser(@PathVariable(value = "id") Long noteId,
                            @Valid @RequestBody User userDetails) {
 
@@ -55,7 +55,7 @@ public class UserController {
 
         User updateUser = userRespository.save(user);
         return updateUser;
-    }
+    }*/
 
     @DeleteMapping("/DeleteUsers/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {

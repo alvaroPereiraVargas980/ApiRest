@@ -1,7 +1,8 @@
 package com.login.demologin.controller;
 
 
-import com.login.demologin.User.User;
+import com.login.demologin.CalendarUserRepository.CalendarUserRepository;
+import com.login.demologin.Repository.UserRespository;
 import com.login.demologin.UserPermission.UserPermission;
 import com.login.demologin.UserPermissionRepository.UserPermissionRepository;
 import com.login.demologin.exception.ResourceNotFoundException;
@@ -18,10 +19,22 @@ public class UserPermissionController {
 
         @Autowired
         private UserPermissionRepository userPermissionRepository;
-        @PostMapping("/CreateUsersPermission")
-        public UserPermission createPermission(@Valid @RequestBody UserPermission userPermission) {
 
-            return userPermissionRepository.save(userPermission);
+        @Autowired
+         private UserRespository userRespository;
+
+        @Autowired
+         private CalendarUserRepository calendarUserRepository;
+
+
+        @PostMapping("/posts/{userId}")
+        public UserPermission createPermission(@PathVariable (value = "userId") Long userId,
+                                               @Valid @RequestBody UserPermission userPermission) {
+            return userRespository.findById(userId).map(user -> {
+                userPermission.setUser(user);
+                //long id=userId;
+                return userPermissionRepository.save(userPermission);
+            }).orElseThrow(() -> new ResourceNotFoundException("PostId " + userId + " not found"));
         }
          @GetMapping("/GetUserPermission")
          public List<UserPermission> getAllPermission(){
@@ -37,6 +50,5 @@ public class UserPermissionController {
 
         return ResponseEntity.ok().build();
     }
-
 
 }
