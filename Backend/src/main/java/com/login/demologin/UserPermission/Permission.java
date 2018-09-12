@@ -1,7 +1,5 @@
 package com.login.demologin.UserPermission;
 
-import com.login.demologin.CalendarUser.CalendarUser;
-import com.login.demologin.User.User;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +8,7 @@ import javax.persistence.Id;
 
     @Entity
     @Table(name = "permission")
-    public class UserPermission {
+    public class Permission {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private long id;
@@ -20,26 +18,24 @@ import javax.persistence.Id;
         private String delete;
 
         private String view;
-        @ManyToOne
-        @JoinColumn(name = "id_user")
-        private User id_user;
 
-        @ManyToOne
-        @JoinColumn(name = "id_calendar")
-        private CalendarUser id_calendar;
+        private long id_user;
 
-        public UserPermission() {
+        private long id_calendar;
+
+        public Permission() {
         }
-        public UserPermission(long id) {
+        public Permission(long id) {
             this.id = id;
         }
 
-        public UserPermission(String update, String delete, String view, User user, CalendarUser calendarUser) {
-            this.id_user = user;
-            this.id_calendar = calendarUser;
-            this.delete = delete;
-            this.update = update;
-            this.view = view;
+        public Permission(String update, String delete, String view , Long id_user, Long id_calendar){
+            this.update=update;
+            this.delete=delete;
+            this.view=view;
+            this.id_user=id_user;
+            this.id_calendar=id_calendar;
+
         }
 
         public long getId() {
@@ -74,20 +70,19 @@ import javax.persistence.Id;
             this.view = view;
         }
 
-        public User getId_user() {
+        public long getId_user() {
             return id_user;
         }
 
-        public void setId_user(User id_user) {
+        public void setId_user(long id_user) {
             this.id_user = id_user;
         }
 
-        public CalendarUser getId_calendar() {
+        public long getId_calendar() {
             return id_calendar;
         }
 
-        public void setId_calendar(CalendarUser id_calendar) {
+        public void setId_calendar(long id_calendar) {
             this.id_calendar = id_calendar;
         }
     }
-
