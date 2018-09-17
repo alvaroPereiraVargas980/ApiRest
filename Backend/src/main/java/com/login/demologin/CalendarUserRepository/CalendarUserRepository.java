@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface CalendarUserRepository extends CrudRepository<CalendarUser, Long>{
+public interface CalendarUserRepository extends CrudRepository<CalendarUser, Integer>{
    @Query(value = "SELECT * FROM calendar  WHERE owner=:id",nativeQuery = true)
    public List<CalendarUser> findByTitle(@Param("id") String id);
 

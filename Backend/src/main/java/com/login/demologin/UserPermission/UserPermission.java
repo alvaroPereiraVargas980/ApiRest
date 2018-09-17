@@ -1,7 +1,5 @@
 package com.login.demologin.UserPermission;
 
-import com.login.demologin.CalendarUser.CalendarUser;
-import com.login.demologin.User.User;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,81 +11,80 @@ import javax.persistence.Id;
     public class UserPermission {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private long id;
+        private Integer id_permission;
 
-        private String update;
+        private String update_permission;
 
-        private String delete;
+        private String delete_permission;
 
-        private String view;
-        @ManyToOne
-        @JoinColumn(name = "id_user")
-        private User id_user;
+        private String view_permission;
 
-        @ManyToOne
-        @JoinColumn(name = "id_calendar")
-        private CalendarUser id_calendar;
+        private Integer id_calendar;
+
+        private Integer id_user;
+
 
         public UserPermission() {
         }
-        public UserPermission(long id) {
-            this.id = id;
+        public UserPermission(Integer id_permission) {
+            this.id_permission = id_permission;
         }
 
-        public UserPermission(String update, String delete, String view, User user, CalendarUser calendarUser) {
-            this.id_user = user;
-            this.id_calendar = calendarUser;
-            this.delete = delete;
-            this.update = update;
-            this.view = view;
+        public UserPermission(String update_permission, String delete_permission, String view_permission, Integer id_user, Integer id_calendar){
+            this.update_permission = update_permission;
+            this.delete_permission = delete_permission;
+            this.view_permission = view_permission;
+            this.id_user=id_user;
+            this.id_calendar=id_calendar;
+
         }
 
-        public long getId() {
-            return id;
+        public Integer getId_permission() {
+            return id_permission;
         }
 
-        public void setId(long id) {
-            this.id = id;
+        public void setId_permission(Integer id_permission) {
+            this.id_permission = id_permission;
         }
 
-        public String getUpdate() {
-            return update;
+        public String getUpdate_permission() {
+            return update_permission;
         }
 
-        public void setUpdate(String update) {
-            this.update = update;
+        public void setUpdate_permission(String update_permission) {
+            this.update_permission = update_permission;
         }
 
-        public String getDelete() {
-            return delete;
+        public String getDelete_permission() {
+            return delete_permission;
         }
 
-        public void setDelete(String delete) {
-            this.delete = delete;
+        public void setDelete_permission(String delete_permission) {
+            this.delete_permission = delete_permission;
         }
 
-        public String getView() {
-            return view;
+        public String getView_permission() {
+            return view_permission;
         }
 
-        public void setView(String view) {
-            this.view = view;
+        public void setView_permission(String view_permission) {
+            this.view_permission = view_permission;
         }
 
-        public User getId_user() {
-            return id_user;
-        }
-
-        public void setId_user(User id_user) {
-            this.id_user = id_user;
-        }
-
-        public CalendarUser getId_calendar() {
+        public Integer getId_calendar() {
             return id_calendar;
         }
 
-        public void setId_calendar(CalendarUser id_calendar) {
+        public void setId_calendar(Integer id_calendar) {
             this.id_calendar = id_calendar;
+        }
+
+        public Integer getId_user() {
+            return id_user;
+        }
+
+        public void setId_user(Integer id_user) {
+            this.id_user = id_user;
         }
     }
 

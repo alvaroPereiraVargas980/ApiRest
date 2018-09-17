@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Users } from './model/users';
 import { Calendar } from './model/calendar';
 import {CalendarUser} from './model/calendarUser';
+import { UserPermission } from './model/userPermission';
 
 
 @Injectable({
@@ -45,6 +46,9 @@ deleteUser(_id : string){
 getUsersCalendar(userName: string){
   return this.http.get('http://localhost:8080/GetUserCalendar/'+userName);
 }
+getpermission(){
+  return this.http.get('http://localhost:8080/GetUserP');
+}
 
 //this section belows to CalendarUser section 
   postCalendUser(calen : CalendarUser){
@@ -62,9 +66,23 @@ getUsersCalendar(userName: string){
   deleteCalendarUser(id :string){
     return this.http.delete('http://localhost:8080/DeleteCalendarUsers'+ `/${id}`);
   }
-  test(){
+  getAutocomplete(){
     return this.http.get('http://localhost:8080/GetAutocomplete');
+  }
+  //permission section
+
+
+  getIdPermission(nickname:string){
+    return this.http.get('http://localhost:8080/GetIdPermission/'+ nickname);
+  }
+  postPermission(user : UserPermission){
+    return this.http.post('http://localhost:8080/CreatePermission/',user);
+  }
+  getAllPermission(id_calendar:string){
+    //console.log(id_calendar);
+    return this.http.get('http://localhost:8080/GetIdCalendar/'+id_calendar);
+  }
   }
 
 //this section belows to Calendar section
-}
+

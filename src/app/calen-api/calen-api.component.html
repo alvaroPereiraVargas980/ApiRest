@@ -219,37 +219,31 @@
                           </div>
 
                             <h3>List collaborators</h3>
-                          <table class="table table-striped">
+                          <table class="table table-responsive">
                               <thead>
                                 <tr>
                                   <th scope="col">Name</th>
                                   <th scope="col">View</th>
                                   <th scope="col">Update</th>
                                   <th scope="col">Delete</th>
-                                  <th scope="col"></th>
+                                 
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <th scope="row">alvarito123</th>
-                                  <td>X</td>
-                                  <td></td>
-                                  <td>X</td>
-                                  <td>delete</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">monkeydonkey25</th>
-                                  <td></td>
-                                  <td>X</td>
-                                  <td></td>
-                                  <td>delete</td>
+                                <tr *ngFor="let p of arrayTes">
+                                  <th scope="row">{{p.owner}}</th>
+                                  <td>{{p.view_permission}}</td>
+                                  <td>{{p.update_permission}}</td>
+                                  <td>{{p.delete_permission}}</td>
+                                  <td> <button class="btn">delete</button> </td>
                                 </tr>
                                 
                               </tbody>
                             </table>
 
 
-                          <button type="submit" class="btn btn-primary">Save_Data</button>  
+                          <button type="submit" class="btn btn-primary"(click)="postPermission()">Save_Data</button>  
+                         
                         </div>
                      
                     </form>

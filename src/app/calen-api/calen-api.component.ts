@@ -18,6 +18,7 @@ import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject, merge} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {UserPermission} from '../model/userPermission';
+import { DataPermission } from '../model/dataPermission';
 
 @Component({
   selector: 'app-calen-api',
@@ -50,6 +51,7 @@ import {UserPermission} from '../model/userPermission';
 
 export class CalenApiComponent implements OnInit {
   calendars$: Object;
+  permissions:object;
   edited: boolean;
   date: Date;
   id:string;
@@ -59,6 +61,7 @@ export class CalenApiComponent implements OnInit {
   index:string;
   model:any;
   itemsArray = [];
+  arrayTes=[];
   storage:any;
   controlProfile:any;
   timeStart: any;
@@ -70,11 +73,16 @@ export class CalenApiComponent implements OnInit {
   models: any;
   states:any;
   cale$: any;
+  test2:any;
+  test3:any;
+  tam:number;
+  CalenUserPermission: UserPermission;
+  DataPermission : DataPermission;
   emailFormArray: Array<any> = [];
   categories = [ 
-    {name :"update_event", id: 1},
-    {name :"delete_event", id: 2},
-    {name :"view_event", id: 3},
+    {name :"update", id: 1},
+    {name :"delete", id: 2},
+    {name :"view", id: 3},
   ];
 
   options: DatepickerOptions = {
@@ -114,6 +122,7 @@ export class CalenApiComponent implements OnInit {
     auth.handleAuthentication(); 
   }
   ngOnInit() {
+    //this.chargePermission(); 
     this.getAutocomplete();
     this.edited=false;
   
@@ -130,6 +139,7 @@ export class CalenApiComponent implements OnInit {
     //console.log(this.profile.nickname);
     this.data.getCalendUser().subscribe(data => {
       console.log(data);
+      console.log(typeof(data));
      this.calendarOptions = {
         editable: true,
         defaultDate: Date(),
@@ -329,67 +339,93 @@ export class CalenApiComponent implements OnInit {
       }
      this.data.postCalendUser(cale).subscribe(res=>{
         alert("added succesfull");
-        console.log(cale);
       })
   } 
   getAutocomplete(){
-    this.data.test().subscribe(res=>{
+    this.data.getAutocomplete().subscribe(res=>{
       this.states=res;
-      console.log(res);
     })
   }
   open(id:any){
     $('#friends').modal('show');
-    this.generate(id); 
+    this.generate(id);
+    
   }
   generate(id:any){
     this.data.getCalendUserId(JSON.stringify(id)).subscribe( res=>{
     this.cale$=res;
+    //console.log(this.cale$);
     $('#itemDescription').val(this.cale$.title);
     $('#itemOwner').val(this.cale$.owner);
     $('#itemStart').val(this.cale$.start);
     $('#itemEnd').val(this.cale$.end);
-    
+    this.chargePermission(this.cale$.id);
     }
     )
   }
   fullcalendar(nickname: any){
-   
     this.data.getUsersCalendar(nickname).subscribe(
       data=> this.calendars$= data
     );
   }
-
   storagePermission(){
-
-
+    this.test2= $('#typeahead-focus').val();
+    this.data.getIdPermission(this.test2).subscribe(res=>{
+      this.test3=res;
+      console.log(this.test3[0]);
+    })
   }
-
   onChange(email:string, isChecked: boolean) {
-
-    
     if(isChecked) {
       this.emailFormArray.push(email);
       console.log(this.emailFormArray);
-    
     } else {
       let index = this.emailFormArray.indexOf(email);
       this.emailFormArray.splice(index,1);
       console.log(this.emailFormArray);
-      
     }
-    var CalenUserPermission: UserPermission={
-      permission_id:null, 
-      updatePermission:this.emailFormArray[0], 
-      deletePermission: this.emailFormArray[1],
-      viewPermission: this.emailFormArray[2],
-      user_id:null
+     this.CalenUserPermission={
+      //id_permission:null, 
+      update_permission:this.emailFormArray[0], 
+      delete_permission: this.emailFormArray[1],
+      view_permission: this.emailFormArray[2],
+      id_user:this.test3[0],
+      id_calendar:this.cale$.id
   };
-  console.log(CalenUserPermission);
+  console.log(this.CalenUserPermission);
+ 
+   
+}
+postPermission(){
+this.data.postPermission(this.CalenUserPermission).subscribe(res=>{
+  console.log("permission added");
+})
+
+}
+chargePermission(cale:any){
+  console.log(JSON.stringify(cale));
+  this.data.getAllPermission(JSON.stringify(cale)).subscribe(res=>{
+   this.test1(res,0);
+  });
+  
+}
+test1(ArrayCale:any,count:number){
+console.log(ArrayCale);
+var size = Object.keys(ArrayCale).length;
+console.log(typeof( size));
+  for(count=0;count<size;count++){
+  this.DataPermission={
+   delete_permission:ArrayCale[count][0],
+   update_permission:ArrayCale[count][1], 
+   view_permission: ArrayCale[count][2],
+   owner:ArrayCale[count][3]
+  }
+  this.arrayTes.push(this.DataPermission);
+}
+console.log(this.arrayTes);
+console.log(typeof( this.arrayTes));
+//this.arrayTes=this.permissions;
 }
 
-duplicate() {
-  console.log(this.emailFormArray);
 }
   
-  }

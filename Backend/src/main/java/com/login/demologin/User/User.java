@@ -1,22 +1,18 @@
 package com.login.demologin.User;
 
-import com.login.demologin.CalendarUser.CalendarUser;
-import com.login.demologin.UserPermission.UserPermission;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Integer id_user;
     @NotBlank
     private String name;
     @NotBlank
@@ -28,10 +24,13 @@ public class User {
     @NotBlank
     private String updated_at;
 
+
+
+
     public User(){}
 
-    public User(long id){
-        this.id=id;
+    public User(Integer id_user){
+        this.id_user=id_user;
     }
     public User(String name, String nickname,String picture,String sub,String updated_at){
         this.name=name;
@@ -42,11 +41,11 @@ public class User {
     }
 
     public long getId() {
-        return id;
+        return id_user;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(Integer id_user) {
+        this.id_user = id_user;
     }
 
     public String getName() {

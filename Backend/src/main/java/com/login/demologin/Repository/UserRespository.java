@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.login.demologin.User.User;
 import java.util.List;
 
-public interface UserRespository extends CrudRepository<User, Long> {
+public interface UserRespository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT DISTINCT nickname FROM user",nativeQuery = true)
     public List<Object> findByNickname();
 }
