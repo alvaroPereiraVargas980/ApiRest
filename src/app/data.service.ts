@@ -82,6 +82,13 @@ getpermission(){
     //console.log(id_calendar);
     return this.http.get('http://localhost:8080/GetIdCalendar/'+id_calendar);
   }
+  deletePermission(id_permission:string){
+    //console.log(id_calendar);
+    return this.http.delete('http://localhost:8080/DeleteUsersPermission/'+id_permission);
+  }
+  getPermissionByCalendar(id_calendar:string,id_user:string){
+    return this.http.get('http://localhost:8080/GetAllByCalendar/'+id_calendar+'/'+id_user);
+  }
   }
 
 //this section belows to Calendar section

@@ -42,6 +42,12 @@ public class UserPermissionController {
 
                 return (List<Object>)userPermissionRepository.findAllById(id_calendar);
             }
+            @GetMapping("/GetAllByCalendar/{id_calendar}/{id_user}")
+            public List<Object> getAllByCalendar(@PathVariable(value = "id_calendar") Integer id_calendar,
+                                                 @PathVariable(value = "id_user") Integer id_user){
+
+                return (List<Object>)userPermissionRepository.findIdByCalendar(id_calendar,id_user);
+            }
 
 
 

@@ -50,6 +50,10 @@ import { DataPermission } from '../model/dataPermission';
 })
 
 export class CalenApiComponent implements OnInit {
+  show: boolean = false;
+  showUpdate: boolean=true;
+  showDelete: boolean=true;
+  id_owner:number;
   calendars$: Object;
   permissions:object;
   edited: boolean;
@@ -75,7 +79,6 @@ export class CalenApiComponent implements OnInit {
   cale$: any;
   test2:any;
   test3:any;
-  tam:number;
   CalenUserPermission: UserPermission;
   DataPermission : DataPermission;
   emailFormArray: Array<any> = [];
@@ -84,7 +87,6 @@ export class CalenApiComponent implements OnInit {
     {name :"delete", id: 2},
     {name :"view", id: 3},
   ];
-
   options: DatepickerOptions = {
     locale: enLocale,
     barTitleIfEmpty: 'Click to select a date',
@@ -93,9 +95,7 @@ export class CalenApiComponent implements OnInit {
     placeholder: 'Click to select a date',
     useEmptyBarTitle: false,
     fieldId: 'datapicker',
-
   };
-
   calendarOptions: Options;
   displayEvent: any;
   description:string;
@@ -129,11 +129,13 @@ export class CalenApiComponent implements OnInit {
     if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
       this.fullcalendar(this.profile.nickname);
+      this.idOwner(this.profile.nickname);
      
     } else {
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
       this.fullcalendar(this.profile.nickname);
+      this.idOwner(this.profile.nickname);
       });
     }
     //console.log(this.profile.nickname);
@@ -231,7 +233,6 @@ export class CalenApiComponent implements OnInit {
         $('#owner').val(this.profile.nickname);
       } 
     eventClick(model: any) {
-      console.log(model.event)
       model = {
         event: {
           id: model.event.id,
@@ -243,9 +244,11 @@ export class CalenApiComponent implements OnInit {
         },
         duration: {}
       }
+      //console.log(typeof( model.event.id));
+      //console.log(typeof( this.id_owner));
       if(model.event.owner===this.profile.nickname){
-        console.log("averything right");
-       
+        this.showDelete=true;
+        this.showUpdate=true;
       $('#idUpdate').val(model.event.id);
       $('#titleUpdate').val(model.event.title);
       $('#startUpdate').val(model.event.start.format('YYYY-MM-DD:h:mm'));
@@ -253,10 +256,54 @@ export class CalenApiComponent implements OnInit {
       $('#ownerUpdate').val(model.event.owner);
       this.controlProfile=model.event.owner;
       $('#exampleUpdate').modal('show');
-      console.log(this.controlProfile);
       }else{
+        this.data.getPermissionByCalendar(JSON.stringify(model.event.id),JSON.stringify(this.id_owner)).subscribe(res=>{
+          this.showPermission(res,model,0);
+        })
           alert("you are not owner")
       }
+    }
+    showPermission(permission:any,model:any, i:number){
+      this.showDelete=false;
+      this.showUpdate=false;
+      for(i=0; i<=2; i++){
+        console.log(permission[0][i]);
+        if(permission[0][i]=="delete"){
+          alert("you got delete permission");
+          
+          $('#exampleUpdate').modal('show');
+
+          $('#idUpdate').val(model.event.id);
+          $('#titleUpdate').val(model.event.title);
+          $('#startUpdate').val(model.event.start.format('YYYY-MM-DD:h:mm'));
+          $('#endUpdate').val(model.event.end.format('YYYY-MM-DD:h:mm'));
+          $('#ownerUpdate').val(model.event.owner);
+           this.showDelete=true;
+           
+
+        }else if(permission[0][i]=="update"){
+          alert("you got update permission");
+          $('#exampleUpdate').modal('show');
+          $('#idUpdate').val(model.event.id);
+          $('#titleUpdate').val(model.event.title);
+          $('#startUpdate').val(model.event.start.format('YYYY-MM-DD:h:mm'));
+          $('#endUpdate').val(model.event.end.format('YYYY-MM-DD:h:mm'));
+          $('#ownerUpdate').val(model.event.owner);
+          this.showUpdate=true;
+          
+         
+        }else if(permission[0][i]=="view"){
+         alert("you got view permission");
+         $('#exampleUpdate').modal('show');
+         $('#idUpdate').val(model.event.id);
+         $('#titleUpdate').val(model.event.title);
+         $('#startUpdate').val(model.event.start.format('YYYY-MM-DD:h:mm'));
+         $('#endUpdate').val(model.event.end.format('YYYY-MM-DD:h:mm'));
+         $('#ownerUpdate').val(model.event.owner);
+         
+        }
+      
+        }
     }
     update(form : NgForm){
       
@@ -349,6 +396,9 @@ export class CalenApiComponent implements OnInit {
   open(id:any){
     $('#friends').modal('show');
     this.generate(id);
+    this.arrayTes=[];
+    this.show=false;
+    this.emailFormArray=[];
     
   }
   generate(id:any){
@@ -374,7 +424,10 @@ export class CalenApiComponent implements OnInit {
       this.test3=res;
       console.log(this.test3[0]);
     })
+    this.show=true;
+   
   }
+  
   onChange(email:string, isChecked: boolean) {
     if(isChecked) {
       this.emailFormArray.push(email);
@@ -393,21 +446,18 @@ export class CalenApiComponent implements OnInit {
       id_calendar:this.cale$.id
   };
   console.log(this.CalenUserPermission);
- 
-   
 }
 postPermission(){
 this.data.postPermission(this.CalenUserPermission).subscribe(res=>{
-  console.log("permission added");
+  alert("A new collaborator has been added");
 })
-
+this.emailFormArray=[];
 }
 chargePermission(cale:any){
-  console.log(JSON.stringify(cale));
   this.data.getAllPermission(JSON.stringify(cale)).subscribe(res=>{
-   this.test1(res,0);
+   console.log(res);
+    this.test1(res,0);
   });
-  
 }
 test1(ArrayCale:any,count:number){
 console.log(ArrayCale);
@@ -415,17 +465,31 @@ var size = Object.keys(ArrayCale).length;
 console.log(typeof( size));
   for(count=0;count<size;count++){
   this.DataPermission={
-   delete_permission:ArrayCale[count][0],
-   update_permission:ArrayCale[count][1], 
-   view_permission: ArrayCale[count][2],
-   owner:ArrayCale[count][3]
+    id_permission:ArrayCale[count][0],
+   delete_permission:ArrayCale[count][1],
+   update_permission:ArrayCale[count][2], 
+   view_permission: ArrayCale[count][3],
+   owner:ArrayCale[count][4]
   }
   this.arrayTes.push(this.DataPermission);
 }
-console.log(this.arrayTes);
-console.log(typeof( this.arrayTes));
-//this.arrayTes=this.permissions;
 }
-
+closeModalFriends(){
+  this.emailFormArray=[];
+  this.show=false;
+}
+deletePermission(id_permission:any){
+  if(confirm("are you sure wanna delete this permisssion??")){
+    this.data.deletePermission(JSON.stringify(id_permission)).subscribe(res=>{
+     alert("permission deleted");
+})
+}
+}
+idOwner(nickname:any){
+  this.data.getIdPermission(nickname).subscribe(res=>{
+    console.log(res);
+    this.id_owner=res[0];
+  })
+}
 }
   
