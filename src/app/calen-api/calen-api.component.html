@@ -1,28 +1,49 @@
 <div class="row">
   <div class="col-md-3">
          <app-calen-aux></app-calen-aux>
-  
- <h3>Revervations of</h3>
- <!--<button (click)="getDataTest()">data</button>-->
- <h2>{{ profile?.nickname}}</h2>
-<ul [@listStagger]="calendars$">
+
+    <div *ngIf="showReservations">
+    <h4>Reservations</h4>
   <table class="table table-responsive">
     <thead>
       <tr [@listStagger]="calendars$">
         <th scope="col">Description</th>
-        <th scope="col">Owner</th>
-        <th scope="col">Delete</th>
+        <th scope="col">edit</th>
+        <!--<th scope="col">Delete</th>-->
       </tr>
     </thead>
     <tbody>
         <tr *ngFor="let calendar of calendars$">
           <td >{{calendar.title}}</td>
-          <td >{{calendar.owner}}</td>
-          <td (click)="eliminar(calendar.id)"> X</td>
+          <td> <button class="btn" (click)="open(calendar.id)">edit</button> </td>
+          <!--<td (click)="eliminar(calendar.id)"></td>-->
         </tr>
     </tbody>
   </table>
-</ul>
+</div>
+  <div *ngIf="showCollaborator">
+  <h4> collaborator reservations</h4>
+  <table class="table table-responsive">
+    <thead>
+      <tr [@listStagger]="userPermission">
+        <th scope="col">description</th>
+        <th scope="col">owner</th>
+        <!--<th scope="col">Delete</th>-->
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of userPermission">
+          <td >{{c.description}}</td>
+          <td> {{c.owner}} </td>
+          <!--<td (click)="eliminar(calendar.id)"></td>-->
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
   </div>
   <div class="col-md-9">
         <div *ngIf="calendarOptions">
@@ -31,7 +52,7 @@
 </div>
   </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="principal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -50,7 +71,7 @@
                             <div class="form-group">
                               <label for="InputName">Owner</label> 
                               <div class="input-group">
-                                  <input type="text" class="form-control" name="owner" #name="ngModel" id="owner" [(ngModel)]="data.selectedCalendar.owner" placeholder="owner" >              
+                                  <input type="text"  [disabled]="true" class="form-control" name="owner" #name="ngModel" id="owner" [(ngModel)]="data.selectedCalendar.owner" placeholder="owner" >              
                               </div>
                           </div>
                             <div class="form-group">
@@ -59,20 +80,28 @@
                                     <input type="text" class="form-control" name="title" #name="ngModel" id="title" [(ngModel)]="data.selectedCalendar.title" placeholder="description" >              
                                 </div>
                             </div>
-                            <div class="form-group c1">
+                            <div class="form-group">
                                 <label for="InputEmail">start</label>
                                 <div class="input-group">
                                    <input type="text" class="form-control" name="start" #name="ngModel" id="start" [(ngModel)]="data.selectedCalendar.start" placeholder="start" >             
-                                    
-
                                   </div>
                             </div>
-                            <div class="form-group c2">
+                            <div class="form-group">
                                     <label for="InputName">end </label>
                                     <div class="datepicker-container">
-                                        <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
+                                        <ng-datepicker [(ngModel)]="data.selectedCalendar.date" [options]="options"  id="end" name="end" #name="ngModel" placeholder="end"></ng-datepicker>
                                       </div>
+                                      <!--<input type="text" class="form-control" name="endPicker" #name="ngModel" id="endPicker" [(ngModel)]="data.selectedCalendar.endPicker" placeholder="end" > --> 
                                 </div>
+                              
+                                <div class="form-group">
+                                  <label for="InputName">time picker :</label>
+                                  <input type="time" id="startPickerPrin" name="startPickerPrin" [(ngModel)]="startPicker"
+                                     placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
+                                     to
+                                     <input type="time" id="endPickerPrin" name="endPickerPrin" [(ngModel)]="endPicker"
+                                     placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" #name="ngModel" required />
+                              </div>
                             <input  type="submit"  value="save" class="btn btn-info float-xs-right" (click)="saveData(calendarForm)" >
                             
                         </div>
@@ -108,7 +137,7 @@
                                 <div class="form-group">
                                   <label for="InputEmail">Owner</label>
                                   <div class="input-group">
-                                     <input type="text" class="form-control" name="ownerUpdate" #name="ngModel" id="ownerUpdate" [(ngModel)]="ownerUpdate" placeholder="ownerUpdate" >             
+                                     <input type="text"  [disabled]="true" class="form-control" name="ownerUpdate" #name="ngModel" id="ownerUpdate" [(ngModel)]="ownerUpdate" placeholder="ownerUpdate" >             
                                     </div>
                               </div> 
                               <div class="form-group">
@@ -131,8 +160,8 @@
                                      </div>
                                 </div>
                                 <div class="form-group">
-                            <input type="submit" value="update" class="btn btn-info float-xs-right" *ngIf="" (click)="update(updateForm)" >
-                            <input type="submit" value="delete" class="btn btn-info float-sm-left" (click)="deleteUpdate(updateForm)" >
+                            <input type="submit" value="update" class="btn btn-info float-xs-right"  *ngIf="showUpdate" (click)="update(updateForm)" >
+                            <input type="submit" value="delete" class="btn btn-info float-sm-left"   *ngIf="showDelete" (click)="deleteUpdate(updateForm)" >
                         </div>
                         </div>
                     </form>
@@ -147,3 +176,111 @@
     </div>
   </div>
 
+
+
+
+
+
+
+
+  <div class="modal fade" id="friends" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+  
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  <!-- addUserTemplate -->
+            <div class="container">
+                <div class="row ">
+                    <form #calendarForm="ngForm">
+                      <div align="center">
+                        <div class="col-lg-12">
+                            <div class="well well-sm"><h1><span class="glyphicon glyphicon-asterisk"></span>Select your collaborators</h1></div>  
+                            <h4>Event Information</h4>
+                              <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <label for="inputEmail4">Description</label>
+                                  <input type="text" [disabled]="true" class="form-control" id="itemDescription" >
+                                </div>
+                                <!--<div class="form-group col-md-6">
+                                  <label for="inputPassword4">Owner</label>
+                                  <input type="text" [disabled]="true" class="form-control" id="itemOwner" >
+                                </div>-->
+                              </div>
+                              
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="inputCity">startDate</label>
+                                  <input type="text" [disabled]="true" class="form-control" id="itemStart">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="inputCity">EndDate</label>
+                                  <input type="text" [disabled]="true" class="form-control" id="itemEnd">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="InputEmail">collaborator</label>
+                                        <div class="input-group">
+                                          <input id="typeahead-focus" name="model" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #instance="ngbTypeahead">            
+                                          <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" (click)="storagePermission()">addC</button>
+                                          </div>
+                                        </div>
+                              </div> 
+                        </div>
+                            <div class="form-group" *ngIf="show">
+                              <div>
+                              <h3>Permissions</h3>
+                                <div class="form-check form-check-inline " *ngFor="let cat of categories">
+                                    <input class="form-check-input" (change)="onChange(cat.name, $event.target.checked)"name="{{ cat.name }}" type="checkbox" id="{{cat.name}}">
+                                    <label class="form-check-label" for="{{cat.name}}">
+                                        {{cat.name}}
+                                    </label>
+                                </div>
+                              </div>            
+                          </div>
+                          <h3>List collaborators</h3>
+                              <div *ngIf="showPermissionsUsers">
+                            
+                          <table class="table table-responsive">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col"></th>
+                                  <th scope="col">Rules</th>
+                                 
+                                 
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let p of arrayTes">
+                                  <th scope="row">{{p.owner}}</th>
+                                  <td>{{p.view_permission}}</td>
+                                  <td>{{p.update_permission}}</td>
+                                 
+                                  <td> <button class="btn" (click)="deletePermission(p.id_permission)">delete</button> </td>
+                                </tr>
+                                
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <button type="submit" class="btn btn-primary"(click)="postPermission()">Save_Data</button>  
+                         
+                        </div>
+                     
+                    </form>
+                </div>
+              </div>
+  <!-- adduserTemplate -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalFriends()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

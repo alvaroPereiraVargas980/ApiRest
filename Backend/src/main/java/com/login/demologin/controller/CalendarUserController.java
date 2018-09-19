@@ -23,18 +23,24 @@ import java.util.List;
 
             return (List<CalendarUser>) calendarUserRepository.findAll();
         }
+        @GetMapping("/GetUserCalendar/{name}")
+        public List<CalendarUser> test(@PathVariable(value = "name") String name){
+
+          return (List<CalendarUser>) calendarUserRepository.findByTitle(name);
+        }
+
         @PostMapping("/CreateCalendarUsers")
         public CalendarUser createCalendar(@Valid @RequestBody CalendarUser calendar) {
 
             return calendarUserRepository.save(calendar);
         }
         @GetMapping("/GetsCalendarUsers/{id}")
-        public CalendarUser getCalendarById(@PathVariable(value = "id") Long noteId) {
+        public CalendarUser getCalendarById(@PathVariable(value = "id") Integer noteId) {
             return calendarUserRepository.findById(noteId)
                     .orElseThrow(() -> new ResourceNotFoundException("Calendar", "id", noteId));
         }
         @PutMapping("/PutCalendarUsers/{id}")
-        public CalendarUser updateCalendar(@PathVariable(value = "id") Long noteId,
+        public CalendarUser updateCalendar(@PathVariable(value = "id") Integer noteId,
                                        @Valid @RequestBody CalendarUser calendarDetails) {
 
             CalendarUser calendar = calendarUserRepository.findById(noteId)
@@ -50,7 +56,7 @@ import java.util.List;
             return updateCalendar;
         }
         @DeleteMapping("/DeleteCalendarUsers/{id}")
-        public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
+        public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Integer noteId) {
             CalendarUser calendar = calendarUserRepository.findById(noteId)
                     .orElseThrow(() -> new ResourceNotFoundException("Calendar", "id", noteId));
 

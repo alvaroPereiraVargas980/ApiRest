@@ -9,11 +9,11 @@ import javax.validation.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "CalendarUser")
+@Table(name = "Calendar")
 public class CalendarUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Integer id_calendar;
     @NotBlank
     private String title;
     @NotBlank
@@ -23,11 +23,12 @@ public class CalendarUser {
     @NotBlank
     private String owner;
 
+
     public CalendarUser() {
     }
 
-    public CalendarUser(long id) {
-        this.id = id;
+    public CalendarUser(Integer id_calendar) {
+        this.id_calendar = id_calendar;
     }
 
     public CalendarUser(String title, String start, String end, String owner) {
@@ -38,11 +39,11 @@ public class CalendarUser {
     }
 
     public long getId() {
-        return id;
+        return id_calendar;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(Integer id_calendar) {
+        this.id_calendar = id_calendar;
     }
 
     public String getTitle() {

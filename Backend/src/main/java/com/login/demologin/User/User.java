@@ -7,13 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Integer id_user;
     @NotBlank
     private String name;
     @NotBlank
@@ -25,10 +24,13 @@ public class User {
     @NotBlank
     private String updated_at;
 
+
+
+
     public User(){}
 
-    public User(long id){
-        this.id=id;
+    public User(Integer id_user){
+        this.id_user=id_user;
     }
     public User(String name, String nickname,String picture,String sub,String updated_at){
         this.name=name;
@@ -39,11 +41,11 @@ public class User {
     }
 
     public long getId() {
-        return id;
+        return id_user;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(Integer id_user) {
+        this.id_user = id_user;
     }
 
     public String getName() {
@@ -85,4 +87,6 @@ public class User {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
+
 }

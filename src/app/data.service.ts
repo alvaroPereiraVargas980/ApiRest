@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Users } from './model/users';
 import { Calendar } from './model/calendar';
 import {CalendarUser} from './model/calendarUser';
+import { UserPermission } from './model/userPermission';
 
 
 @Injectable({
@@ -41,6 +42,14 @@ export class DataService {
 deleteUser(_id : string){
   return this.http.delete('http://localhost:8080/DeleteUsers'+ `/${_id}`);
 }
+
+getUsersCalendar(userName: string){
+  return this.http.get('http://localhost:8080/GetUserCalendar/'+userName);
+}
+getpermission(){
+  return this.http.get('http://localhost:8080/GetUserP');
+}
+
 //this section belows to CalendarUser section 
   postCalendUser(calen : CalendarUser){
     return this.http.post('http://localhost:8080/CreateCalendarUsers',calen)
@@ -48,29 +57,48 @@ deleteUser(_id : string){
   getCalendUser(){
     return this.http.get('http://localhost:8080/GetCalendarUsers')
   }
+  getCalendUserId(id :string){
+    return this.http.get('http://localhost:8080/GetsCalendarUsers/'+ id)
+  }
   putCalendarUser(id: string,calendar: Calendar){
     return this.http.put('http://localhost:8080/PutCalendarUsers/'+ id, calendar);
   }
   deleteCalendarUser(id :string){
     return this.http.delete('http://localhost:8080/DeleteCalendarUsers'+ `/${id}`);
   }
-//this section belows to Calendar section
-  
- 
-  getCalendars(){
-    return this.http.get('http://localhost:8080/GetCalendars');
+  getAutocomplete(){
+    return this.http.get('http://localhost:8080/GetAutocomplete');
   }
-  getCalendar(calendarId) {
-    return this.http.get('http://localhost:8080/GetsCalendars/'+calendarId)
-}
-postCalendar(calendar: Calendar){
-  return this.http.post('http://localhost:8080/CreateCalendars',calendar);
-}
-putCalendar(id: string,calendar: Calendar){
-  return this.http.put('http://localhost:8080/PutCalendars/'+ id, calendar);
-}
-deleteCalendar(id :string){
-  return this.http.delete('http://localhost:8080/DeleteCalendars'+ `/${id}`);
-}
+  getUserByPermission(id_user :string){
+    return this.http.get('http://localhost:8080/GetUserByPermission/'+id_user);
+  }
+  //permission section
 
-}
+
+  getIdPermission(nickname:string){
+    return this.http.get('http://localhost:8080/GetIdPermission/'+ nickname);
+  }
+  postPermission(user : UserPermission){
+    return this.http.post('http://localhost:8080/CreatePermission/',user);
+  }
+  getAllPermission(id_calendar:string){
+    //console.log(id_calendar);
+    return this.http.get('http://localhost:8080/GetIdCalendar/'+id_calendar);
+  }
+  deletePermission(id_permission:string){
+    //console.log(id_calendar);
+    return this.http.delete('http://localhost:8080/DeleteUsersPermission/'+id_permission);
+  }
+  getPermissionByCalendar(id_calendar:string,id_user:string){
+    return this.http.get('http://localhost:8080/GetAllByCalendar/'+id_calendar+'/'+id_user);
+  }
+  getIdPermissionByIdCalendar(id_calendar:string){
+    return this.http.get('http://localhost:8080/GetPermissionByIdCalendar/'+id_calendar);
+  }
+  deleteCalendarByCalendarPermission(id_calendar:string, id_permission){
+    return this.http.delete('http://localhost:8080/DeleteCalendarPermission/'+id_calendar+'/'+id_permission);
+  }
+  }
+
+//this section belows to Calendar section
+

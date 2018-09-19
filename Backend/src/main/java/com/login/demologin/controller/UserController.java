@@ -1,10 +1,8 @@
 package com.login.demologin.controller;
 
-import com.login.demologin.Calrepository.CaleRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.login.demologin.User.User;
-import com.login.demologin.calendar.Calendar;
 import com.login.demologin.Repository.UserRespository;
 import javax.validation.Valid;
 import java.util.List;
@@ -29,14 +27,27 @@ public class UserController {
 
         return (List<User>) userRespository.findAll();
     }
+    @GetMapping("/GetAutocomplete")
+    public List<Object> testuser(){
+
+        return (List<Object>) userRespository.findByNickname();
+    }
 
     @GetMapping("/GetUsers/{id}")
-    public User getNoteById(@PathVariable(value = "id") Long noteId) {
+    public User getNoteById(@PathVariable(value = "id") Integer noteId) {
         return userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
     }
+    @GetMapping("/GetUserByPermission/{id_user}")
+    public List<Object> userByPermission(@PathVariable(value = "id_user") Integer id_user){
+
+        return (List<Object>) userRespository.findUserByPermission(id_user);
+    }
+
+
+
     @PutMapping("/PutUsers/{id}")
-    public User updateUser(@PathVariable(value = "id") Long noteId,
+    public User updateUser(@PathVariable(value = "id") Integer noteId,
                            @Valid @RequestBody User userDetails) {
 
         User user = userRespository.findById(noteId)
@@ -53,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping("/DeleteUsers/{id}")
-    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
+    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Integer noteId) {
         User user = userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
 
