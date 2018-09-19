@@ -38,7 +38,15 @@ public class UserController {
         return userRespository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", noteId));
     }
-   @PutMapping("/PutUsers/{id}")
+    @GetMapping("/GetUserByPermission/{id_user}")
+    public List<Object> userByPermission(@PathVariable(value = "id_user") Integer id_user){
+
+        return (List<Object>) userRespository.findUserByPermission(id_user);
+    }
+
+
+
+    @PutMapping("/PutUsers/{id}")
     public User updateUser(@PathVariable(value = "id") Integer noteId,
                            @Valid @RequestBody User userDetails) {
 

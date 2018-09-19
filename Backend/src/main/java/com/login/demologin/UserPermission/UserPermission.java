@@ -15,7 +15,6 @@ import javax.persistence.Id;
 
         private String update_permission;
 
-        private String delete_permission;
 
         private String view_permission;
 
@@ -30,9 +29,8 @@ import javax.persistence.Id;
             this.id_permission = id_permission;
         }
 
-        public UserPermission(String update_permission, String delete_permission, String view_permission, Integer id_user, Integer id_calendar){
+        public UserPermission(String update_permission, String view_permission, Integer id_user, Integer id_calendar){
             this.update_permission = update_permission;
-            this.delete_permission = delete_permission;
             this.view_permission = view_permission;
             this.id_user=id_user;
             this.id_calendar=id_calendar;
@@ -53,14 +51,6 @@ import javax.persistence.Id;
 
         public void setUpdate_permission(String update_permission) {
             this.update_permission = update_permission;
-        }
-
-        public String getDelete_permission() {
-            return delete_permission;
-        }
-
-        public void setDelete_permission(String delete_permission) {
-            this.delete_permission = delete_permission;
         }
 
         public String getView_permission() {

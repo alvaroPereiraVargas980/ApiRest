@@ -42,6 +42,12 @@ public class UserPermissionController {
 
                 return (List<Object>)userPermissionRepository.findAllById(id_calendar);
             }
+            @GetMapping("/GetPermissionByIdCalendar/{id_calendar}")
+            public List<Object> getPermissionByIdCalendar(@PathVariable(value = "id_calendar") Integer id_calendar){
+
+                return (List<Object>)userPermissionRepository.findIdPermissionByCalendar(id_calendar);
+            }
+
             @GetMapping("/GetAllByCalendar/{id_calendar}/{id_user}")
             public List<Object> getAllByCalendar(@PathVariable(value = "id_calendar") Integer id_calendar,
                                                  @PathVariable(value = "id_user") Integer id_user){
@@ -49,7 +55,12 @@ public class UserPermissionController {
                 return (List<Object>)userPermissionRepository.findIdByCalendar(id_calendar,id_user);
             }
 
+            @DeleteMapping ("/DeleteCalendarPermission/{id_calendar}/{id_permission}")
+            public void deleteCalendarPermission(@PathVariable(value = "id_calendar") Integer id_calendar,
+                                                 @PathVariable(value = "id_permission") Integer id_permission){
+                 userPermissionRepository.deleteCalendarPermission(id_calendar,id_permission);
 
+            }
 
             @DeleteMapping("/DeleteUsersPermission/{id}")
             public ResponseEntity<?> deletePermission(@PathVariable(value = "id") Integer noteId) {

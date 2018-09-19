@@ -2,7 +2,7 @@
   <div class="col-md-3">
          <app-calen-aux></app-calen-aux>
 
-<ul [@listStagger]="calendars$">
+    <div *ngIf="showReservations">
     <h4>Reservations</h4>
   <table class="table table-responsive">
     <thead>
@@ -20,8 +20,30 @@
         </tr>
     </tbody>
   </table>
+</div>
+  <div *ngIf="showCollaborator">
   <h4> collaborator reservations</h4>
-</ul>
+  <table class="table table-responsive">
+    <thead>
+      <tr [@listStagger]="userPermission">
+        <th scope="col">description</th>
+        <th scope="col">owner</th>
+        <!--<th scope="col">Delete</th>-->
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of userPermission">
+          <td >{{c.description}}</td>
+          <td> {{c.owner}} </td>
+          <!--<td (click)="eliminar(calendar.id)"></td>-->
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
   </div>
   <div class="col-md-9">
         <div *ngIf="calendarOptions">
@@ -221,15 +243,16 @@
                                 </div>
                               </div>            
                           </div>
-
-                            <h3>List collaborators</h3>
+                          <h3>List collaborators</h3>
+                              <div *ngIf="showPermissionsUsers">
+                            
                           <table class="table table-responsive">
                               <thead>
                                 <tr>
                                   <th scope="col">Name</th>
                                   <th scope="col"></th>
                                   <th scope="col">Rules</th>
-                                  <th scope="col"></th>
+                                 
                                  
                                 </tr>
                               </thead>
@@ -238,13 +261,13 @@
                                   <th scope="row">{{p.owner}}</th>
                                   <td>{{p.view_permission}}</td>
                                   <td>{{p.update_permission}}</td>
-                                  <td>{{p.delete_permission}}</td>
+                                 
                                   <td> <button class="btn" (click)="deletePermission(p.id_permission)">delete</button> </td>
                                 </tr>
                                 
                               </tbody>
                             </table>
-
+                          </div>
 
                           <button type="submit" class="btn btn-primary"(click)="postPermission()">Save_Data</button>  
                          

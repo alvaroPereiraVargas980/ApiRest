@@ -69,6 +69,9 @@ getpermission(){
   getAutocomplete(){
     return this.http.get('http://localhost:8080/GetAutocomplete');
   }
+  getUserByPermission(id_user :string){
+    return this.http.get('http://localhost:8080/GetUserByPermission/'+id_user);
+  }
   //permission section
 
 
@@ -88,6 +91,12 @@ getpermission(){
   }
   getPermissionByCalendar(id_calendar:string,id_user:string){
     return this.http.get('http://localhost:8080/GetAllByCalendar/'+id_calendar+'/'+id_user);
+  }
+  getIdPermissionByIdCalendar(id_calendar:string){
+    return this.http.get('http://localhost:8080/GetPermissionByIdCalendar/'+id_calendar);
+  }
+  deleteCalendarByCalendarPermission(id_calendar:string, id_permission){
+    return this.http.delete('http://localhost:8080/DeleteCalendarPermission/'+id_calendar+'/'+id_permission);
   }
   }
 
